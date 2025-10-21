@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { io } from "socket.io-client";
 import API from "../services/api";
 
-const SOCKET_SERVER_URL = "http://localhost:4000"; // adjust to your backend port
+const SOCKET_SERVER_URL = "https://broker-back.onrender.com"; // adjust to your backend port
 
 export default function ChatWrapper() {
   const { roomId } = useParams(); // get roomId from URL
