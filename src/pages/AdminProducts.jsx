@@ -28,7 +28,7 @@ export default function AdminProducts() {
     fetchAllProducts();
   }, []);
   useEffect(() => {
-    if (!user || user.role !== "seller") {
+    if (!user || user.role !== "admin") {
       alert("This resource is not authorized");
       navigate("/"); // redirect to home page
     }
@@ -78,7 +78,7 @@ export default function AdminProducts() {
             >
               {p.images && p.images.length > 0 ? (
                 <img
-                  src={`http://localhost:4000${p.images[0]}`}
+                  src={`https://broker-back.onrender.com${p.images[0]}`}
                   alt={p.name}
                   className="h-40 w-full object-cover rounded-lg mb-2"
                 />
