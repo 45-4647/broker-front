@@ -108,27 +108,32 @@ export default function Login() {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen bg-gray-100">
+    <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 px-4">
       <form
         onSubmit={handleSubmit}
-        className="bg-white p-6 rounded-xl shadow-md w-80"
+        className="bg-slate-900/80 border border-slate-800/80 p-8 rounded-3xl shadow-2xl shadow-slate-950/80 w-full max-w-sm backdrop-blur-xl transform transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_25px_80px_rgba(15,23,42,0.9)]"
       >
-        <h2 className="text-2xl font-semibold mb-4 text-center">Login</h2>
+        <h2 className="text-2xl font-semibold mb-1 text-center text-slate-50">
+          Welcome back
+        </h2>
+        <p className="text-xs text-slate-400 mb-6 text-center">
+          Sign in to continue to your Broker account.
+        </p>
         <input
-          className="w-full p-2 mb-3 border rounded"
+          className="w-full p-2.5 mb-3 border border-slate-700/70 rounded-2xl bg-slate-900/70 text-slate-100 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/70 focus:border-blue-500/70 text-sm"
           type="email"
           placeholder="Email"
           onChange={(e) => setForm({ ...form, email: e.target.value })}
         />
         <input
-          className="w-full p-2 mb-3 border rounded"
+          className="w-full p-2.5 mb-4 border border-slate-700/70 rounded-2xl bg-slate-900/70 text-slate-100 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/70 focus:border-blue-500/70 text-sm"
           type="password"
           placeholder="Password"
           onChange={(e) => setForm({ ...form, password: e.target.value })}
         />
         <button
           type="submit"
-          className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
+          className="w-full bg-gradient-to-r from-blue-500 via-sky-500 to-indigo-500 text-white p-2.5 rounded-full hover:brightness-110 text-sm font-semibold shadow-lg shadow-blue-900/40 transition"
         >
           Login
         </button>

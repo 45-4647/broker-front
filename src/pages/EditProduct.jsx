@@ -71,12 +71,15 @@ export default function EditProduct() {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100 p-4">
+    <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 p-4 text-slate-50">
       <form
         onSubmit={handleSubmit}
-        className="bg-white shadow-md rounded-2xl p-6 w-full max-w-lg sm:max-w-2xl"
+        className="bg-slate-900/80 shadow-2xl shadow-slate-950/80 rounded-3xl p-6 sm:p-8 w-full max-w-lg sm:max-w-2xl border border-slate-800/80 backdrop-blur-xl transform transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_25px_80px_rgba(15,23,42,0.9)]"
       >
-        <h2 className="text-2xl font-semibold mb-4 text-center">Edit Product</h2>
+        <h2 className="text-2xl font-semibold mb-1 text-center">Edit Product</h2>
+        <p className="text-xs text-slate-400 mb-6 text-center">
+          Update details and images for your listing.
+        </p>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <input
@@ -84,7 +87,7 @@ export default function EditProduct() {
             placeholder="Product Name"
             value={form.name}
             onChange={handleChange}
-            className="border p-2 rounded w-full"
+            className="border border-slate-700/70 bg-slate-900/70 text-slate-100 placeholder:text-slate-500 p-2.5 rounded-2xl w-full text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/70 focus:border-blue-500/70"
             required
           />
           <input
@@ -92,7 +95,7 @@ export default function EditProduct() {
             placeholder="Model"
             value={form.model}
             onChange={handleChange}
-            className="border p-2 rounded w-full"
+            className="border border-slate-700/70 bg-slate-900/70 text-slate-100 placeholder:text-slate-500 p-2.5 rounded-2xl w-full text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/70 focus:border-blue-500/70"
           />
           <input
             name="price"
@@ -100,7 +103,7 @@ export default function EditProduct() {
             placeholder="Price"
             value={form.price}
             onChange={handleChange}
-            className="border p-2 rounded w-full"
+            className="border border-slate-700/70 bg-slate-900/70 text-slate-100 placeholder:text-slate-500 p-2.5 rounded-2xl w-full text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/70 focus:border-blue-500/70"
             required
           />
           <input
@@ -108,13 +111,13 @@ export default function EditProduct() {
             placeholder="Category"
             value={form.category}
             onChange={handleChange}
-            className="border p-2 rounded w-full"
+            className="border border-slate-700/70 bg-slate-900/70 text-slate-100 placeholder:text-slate-500 p-2.5 rounded-2xl w-full text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/70 focus:border-blue-500/70"
           />
           <select
             name="condition"
             value={form.condition}
             onChange={handleChange}
-            className="border p-2 rounded w-full"
+            className="border border-slate-700/70 bg-slate-900/70 text-slate-100 p-2.5 rounded-2xl w-full text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/70 focus:border-blue-500/70"
           >
             <option value="New">New</option>
             <option value="Used">Used</option>
@@ -124,7 +127,7 @@ export default function EditProduct() {
             placeholder="Location"
             value={form.location}
             onChange={handleChange}
-            className="border p-2 rounded w-full"
+            className="border border-slate-700/70 bg-slate-900/70 text-slate-100 placeholder:text-slate-500 p-2.5 rounded-2xl w-full text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/70 focus:border-blue-500/70"
             required
           />
         </div>
@@ -134,37 +137,37 @@ export default function EditProduct() {
           placeholder="Description"
           value={form.description}
           onChange={handleChange}
-          className="border p-2 rounded w-full mt-4"
+          className="border border-slate-700/70 bg-slate-900/70 text-slate-100 placeholder:text-slate-500 p-2.5 rounded-2xl w-full mt-4 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/70 focus:border-blue-500/70"
           rows="4"
         />
 
         <div className="mt-4">
-          <label className="block mb-2 text-gray-700 font-medium">
+          <label className="block mb-2 text-slate-200 font-medium text-sm">
             Product Image
           </label>
           {preview && (
             <img
               src={preview}
               alt="Preview"
-              className="h-40 w-full object-cover rounded-lg mb-2"
+              className="h-40 w-full object-cover rounded-xl mb-2 border border-slate-700/70"
             />
           )}
           <input
             type="file"
             accept="image/*"
             onChange={handleFileChange}
-            className="border p-2 rounded w-full"
+            className="border border-slate-700/70 bg-slate-900/70 text-slate-100 p-2.5 rounded-2xl w-full text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/70 focus:border-blue-500/70"
           />
         </div>
 
         <button
           type="submit"
-          className="w-full mt-4 bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-lg"
+          className="w-full mt-4 bg-gradient-to-r from-blue-500 via-sky-500 to-indigo-500 hover:brightness-110 text-white p-2.5 rounded-full text-sm font-semibold shadow-lg shadow-blue-900/40 transition"
         >
           Update Product
         </button>
 
-        {msg && <p className="text-center mt-3 text-sm text-gray-600">{msg}</p>}
+        {msg && <p className="text-center mt-3 text-xs text-slate-400">{msg}</p>}
       </form>
     </div>
   );

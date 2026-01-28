@@ -4,11 +4,12 @@ import API from "../services/api";
 
 
 
-export default function Home() {
+export default function Home({ theme = "dark" }) {
   const [products, setProducts] = useState([]);
   const [filtered, setFiltered] = useState([]);
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("All");
+  const isDark = theme === "dark";
 
   const categories = [
     "All",
@@ -59,13 +60,24 @@ export default function Home() {
   }, [category, search, products]);
 
   return (
-    <div className="min-h-screen bg-gray-50 py-10 px-4">
-      <div className="max-w-6xl mx-auto">
+    <div
+      className={`min-h-screen py-10 px-4 ${
+        isDark
+          ? "bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-slate-50"
+          : "bg-gradient-to-br from-slate-50 via-sky-50 to-slate-50 text-slate-900"
+      }`}
+    >
+      <div className="max-w-6xl mx-auto animate-[fadeIn_0.6s_ease-out]">
         {/* Header */}
         <div className="flex flex-col sm:flex-row justify-between items-center mb-8 gap-4">
-          <h1 className="text-3xl font-bold text-blue-600 text-center sm:text-left">
-            Browse Products
-          </h1>
+          <div className="text-center sm:text-left">
+            <p className="text-xs uppercase tracking-[0.35em] text-slate-400 mb-2">
+              Marketplace
+            </p>
+            <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-400 via-sky-400 to-indigo-400 bg-clip-text text-transparent drop-shadow-[0_0_25px_rgba(56,189,248,0.35)]">
+              Browse Products
+            </h1>
+          </div>
 
           {/* Search Bar */}
           <input
@@ -73,7 +85,7 @@ export default function Home() {
             placeholder="Search by name, model or location..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="border p-2 rounded-lg w-full sm:w-1/2"
+            className="border border-slate-700/70 bg-slate-900/70 text-slate-100 placeholder:text-slate-500 rounded-2xl px-4 py-2.5 w-full sm:w-1/2 shadow-inner shadow-slate-950 focus:outline-none focus:ring-2 focus:ring-blue-500/70 focus:border-blue-500/70 transition"
           />
         </div>
 
@@ -83,11 +95,11 @@ export default function Home() {
             <button
               key={cat}
               onClick={() => setCategory(cat)}
-              className={`px-4 py-2 rounded-lg text-sm font-medium border ${
+              className={`px-4 py-2 rounded-full text-xs sm:text-sm font-medium border transition-all duration-200 backdrop-blur-md ${
                 category === cat
-                  ? "bg-blue-600 text-white border-blue-600"
-                  : "bg-white text-gray-700 border-gray-300 hover:bg-gray-100"
-              } transition`}
+                  ? "bg-gradient-to-r from-blue-500 via-sky-500 to-indigo-500 text-white border-transparent shadow-lg shadow-blue-900/50"
+                  : "bg-slate-900/60 text-slate-300 border-slate-700/70 hover:border-blue-500/60 hover:text-slate-50"
+              }`}
             >
               {cat}
             </button>
@@ -100,40 +112,35 @@ export default function Home() {
             filtered.map((p) => (
               <div
                 key={p._id}
-                className="bg-white shadow-md rounded-xl p-4 hover:shadow-lg transition flex flex-col"
+                className="bg-slate-900/70 border border-slate-800/80 rounded-2xl p-4 flex flex-col shadow-xl shadow-slate-950/60 backdrop-blur-xl transform transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_25px_80px_rgba(15,23,42,0.9)]"
               >
+                {p.images && p.images.length > 0 ? (
+                  <img
+                    src={`https://broker-back.onrender.com${p.images[0]}`}
+                    alt={p.name}
+                    className="rounded-xl object-cover w-full h-56 mb-4"
+                  />
+                ) : (
+                  <div className="w-full h-56 bg-slate-800/80 flex justify-center items-center rounded-xl mb-4 border border-slate-700/70">
+                    <p className="text-slate-500 text-sm">No Image</p>
+                  </div>
+                )}
 
-                 {p.images && p.images.length > 0 ? (
-              <img
-                src={`https://broker-back.onrender.com${p.images[0]}`}
-                alt={p.name}
-                className="rounded-xl object-cover w-full h-80 max-w-md"
-              />
-            ) : (
-              <div className="w-full h-80 bg-gray-200 flex justify-center items-center rounded-xl">
-                <p className="text-gray-400">No Image</p>
-              </div>
-            )}
-                {/* <img
-                  src={p.images && p.images[0] ? `http://localhost:4000/${p.images[0]}` : "/placeholder.png"}
-                  alt={p.name}
-                  className="h-48 w-full object-cover rounded-lg mb-4"
-                /> */}
-                <h2 className="text-xl font-semibold text-gray-800">{p.name}</h2>
-                <p className="text-gray-600">{p.model}</p>
-                <p className="font-bold text-blue-600 mt-1">${p.price}</p>
-                <p className="text-gray-500 text-sm">{p.location}</p>
+                <h2 className="text-lg font-semibold text-slate-50">{p.name}</h2>
+                <p className="text-slate-400 text-sm">{p.model}</p>
+                <p className="font-bold text-sky-400 mt-1">${p.price}</p>
+                <p className="text-slate-500 text-xs mt-1">{p.location}</p>
 
                 <Link
                   to={`/product/${p._id}`}
-                  className=" bg-blue-500 hover:bg-blue-600 text-white text-center rounded-lg py-2 mt-3"
+                  className="mt-4 inline-flex items-center justify-center bg-gradient-to-r from-blue-500 via-sky-500 to-indigo-500 hover:brightness-110 text-white text-sm font-medium text-center rounded-full py-2 px-4 shadow-lg shadow-blue-900/40 transition"
                 >
                   View Details
                 </Link>
               </div>
             ))
           ) : (
-            <p className="text-center text-gray-600 w-full col-span-full">
+            <p className="text-center text-slate-400 w-full col-span-full">
               No products found.
             </p>
           )}

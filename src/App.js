@@ -18,6 +18,17 @@ import ChatWrapper from "./pages/ChatPage";
 
 function App() {
   const [user, setUser] = useState(null);
+  const [theme, setTheme] = useState(
+    () => localStorage.getItem("theme") || "dark"
+  );
+
+  const toggleTheme = () => {
+    setTheme((prev) => {
+      const next = prev === "dark" ? "light" : "dark";
+      localStorage.setItem("theme", next);
+      return next;
+    });
+  };
 console.log(user)
   useEffect(() => {
     // Load user from localStorage when app starts
@@ -31,14 +42,26 @@ console.log(user)
   }, []);
  return (
     <Router>
-      {/* ✅ Sticky Navbar */}
-      <div className="flex flex-col min-h-screen bg-gray-50">
-        <Navbar />
+      {/* ✅ Layout with theme support */}
+      <div
+        className={
+          theme === "dark"
+            ? "flex flex-col min-h-screen bg-slate-950 text-slate-50"
+            : "flex flex-col min-h-screen bg-slate-100 text-slate-900"
+        }
+      >
+        <Navbar theme={theme} toggleTheme={toggleTheme} />
 
         {/* ✅ Main Content Area with Scroll */}
-        <main className="flex-1 pt-20 pb-10 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
+        <main
+          className={
+            theme === "dark"
+              ? "flex-1 pt-16 pb-0 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-slate-900"
+              : "flex-1 pt-16 pb-0 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100"
+          }
+        >
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<Home theme={theme} />} />
             <Route path="/product/:id" element={<ProductDetails />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
@@ -49,12 +72,15 @@ console.log(user)
             <Route path="/contact" element={<Contact />} />
             <Route path="/admin" element={<AdminProducts />} />
             <Route path="/chat" element={<ChatList userId={user?._id} />} />
-            <Route path="/chat/:roomId" element={<ChatWrapper />} />
+            <Route
+              path="/chat/:roomId"
+              element={<ChatWrapper theme={theme} />}
+            />
           </Routes>
         </main>
 
         {/* ✅ Footer stays at bottom */}
-        <Footer />
+        <Footer theme={theme} />
       </div>
     </Router>
   );

@@ -51,53 +51,60 @@ export default function AdminProducts() {
 
   if (loading)
     return (
-      <div className="flex justify-center items-center h-screen">
+      <div className="flex justify-center items-center h-screen bg-slate-950 text-slate-200">
         <p>Loading all products...</p>
       </div>
     );
 
   if (error)
     return (
-      <div className="flex justify-center items-center h-screen">
-        <p className="text-red-600">{error}</p>
+      <div className="flex justify-center items-center h-screen bg-slate-950 text-red-400">
+        <p>{error}</p>
       </div>
     );
 
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
-      <h1 className="text-2xl font-semibold text-center mb-6">Admin Dashboard - Manage Products</h1>
+    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 p-6 text-slate-50">
+      <h1 className="text-2xl font-semibold text-center mb-2">
+        Admin Dashboard
+      </h1>
+      <p className="text-xs text-slate-400 text-center mb-6">
+        Manage all products on the Broker marketplace.
+      </p>
 
       {products.length === 0 ? (
-        <p className="text-gray-600 text-center">No products found.</p>
+        <p className="text-slate-500 text-center">No products found.</p>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {products.map((p) => (
             <div
               key={p._id}
-              className="bg-white shadow-md rounded-xl p-4 flex flex-col"
+              className="bg-slate-900/80 shadow-xl shadow-slate-950/70 rounded-2xl p-4 flex flex-col border border-slate-800/80 backdrop-blur-xl transform transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_25px_80px_rgba(15,23,42,0.9)]"
             >
               {p.images && p.images.length > 0 ? (
                 <img
                   src={`https://broker-back.onrender.com${p.images[0]}`}
                   alt={p.name}
-                  className="h-40 w-full object-cover rounded-lg mb-2"
+                  className="h-40 w-full object-cover rounded-xl mb-3 border border-slate-700/70"
                 />
               ) : (
-                <div className="h-40 bg-gray-200 flex justify-center items-center rounded-lg mb-2">
-                  <span className="text-gray-400">No Image</span>
+                <div className="h-40 bg-slate-900/70 flex justify-center items-center rounded-xl mb-3 border border-slate-700/70">
+                  <span className="text-slate-500 text-sm">No Image</span>
                 </div>
               )}
 
-              <h2 className="font-semibold text-lg">{p.name}</h2>
-              <p className="text-gray-600 text-sm mb-1">{p.model || "—"}</p>
-              <p className="text-blue-600 font-bold mb-2">${p.price}</p>
-              <p className="text-sm text-gray-500 mb-2">
+              <h2 className="font-semibold text-sm sm:text-base">{p.name}</h2>
+              <p className="text-slate-400 text-xs mb-1">
+                {p.model || "—"}
+              </p>
+              <p className="text-sky-400 font-bold mb-1 text-sm">${p.price}</p>
+              <p className="text-xs text-slate-500 mb-2">
                 Seller: {p.seller?.name || "Unknown"}
               </p>
 
               <button
                 onClick={() => handleDelete(p._id)}
-                className="mt-auto bg-red-500 text-white px-3 py-1 rounded-lg hover:bg-red-600 transition text-sm"
+                className="mt-auto bg-red-500 text-white px-3 py-1.5 rounded-full hover:bg-red-600 transition text-xs font-semibold shadow-sm shadow-red-900/60"
               >
                 Delete
               </button>
