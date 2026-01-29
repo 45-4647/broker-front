@@ -12,7 +12,7 @@ export default function ChatWrapper({ theme = "dark" }) {
   const [user, setUser] = useState(null);
   const socketRef = useRef();
 
-  const isDark = theme === "dark";
+  // const isDark = theme === "dark";
 
   // Load logged-in user
   useEffect(() => {
