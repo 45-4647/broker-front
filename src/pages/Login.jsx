@@ -65,7 +65,8 @@ import { useNavigate } from "react-router-dom";
 import API from "../services/api";
 import { ToastContainer, toast } from 'react-toastify'; // Import react-toastify
 
-export default function Login() {
+export default function Login({ theme = "dark" }) {
+  const isDark = theme === "dark";
   const navigate = useNavigate();
   const [form, setForm] = useState({ email: "", password: "" });
 
@@ -108,25 +109,43 @@ export default function Login() {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 px-4">
+    <div
+      className={`flex justify-center items-center min-h-screen px-4 ${
+        isDark
+          ? "bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-slate-50"
+          : "bg-gradient-to-br from-slate-50 via-sky-50 to-slate-50 text-slate-900"
+      }`}
+    >
       <form
         onSubmit={handleSubmit}
-        className="bg-slate-900/80 border border-slate-800/80 p-8 rounded-3xl shadow-2xl shadow-slate-950/80 w-full max-w-sm backdrop-blur-xl transform transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_25px_80px_rgba(15,23,42,0.9)]"
+        className={`p-8 rounded-3xl shadow-2xl w-full max-w-sm backdrop-blur-xl transform transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_25px_80px_rgba(15,23,42,0.25)] border ${
+          isDark
+            ? "bg-slate-900/80 border-slate-800/80 shadow-slate-950/80"
+            : "bg-white/80 border-slate-200 shadow-slate-900/10"
+        }`}
       >
-        <h2 className="text-2xl font-semibold mb-1 text-center text-slate-50">
+        <h2 className="text-2xl font-semibold mb-1 text-center">
           Welcome back
         </h2>
-        <p className="text-xs text-slate-400 mb-6 text-center">
+        <p className={`text-xs mb-6 text-center ${isDark ? "text-slate-400" : "text-slate-500"}`}>
           Sign in to continue to your Broker account.
         </p>
         <input
-          className="w-full p-2.5 mb-3 border border-slate-700/70 rounded-2xl bg-slate-900/70 text-slate-100 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/70 focus:border-blue-500/70 text-sm"
+          className={`w-full p-2.5 mb-3 border rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-500/70 focus:border-blue-500/70 text-sm ${
+            isDark
+              ? "border-slate-700/70 bg-slate-900/70 text-slate-100 placeholder:text-slate-500"
+              : "border-slate-200 bg-white text-slate-900 placeholder:text-slate-400"
+          }`}
           type="email"
           placeholder="Email"
           onChange={(e) => setForm({ ...form, email: e.target.value })}
         />
         <input
-          className="w-full p-2.5 mb-4 border border-slate-700/70 rounded-2xl bg-slate-900/70 text-slate-100 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/70 focus:border-blue-500/70 text-sm"
+          className={`w-full p-2.5 mb-4 border rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-500/70 focus:border-blue-500/70 text-sm ${
+            isDark
+              ? "border-slate-700/70 bg-slate-900/70 text-slate-100 placeholder:text-slate-500"
+              : "border-slate-200 bg-white text-slate-900 placeholder:text-slate-400"
+          }`}
           type="password"
           placeholder="Password"
           onChange={(e) => setForm({ ...form, password: e.target.value })}

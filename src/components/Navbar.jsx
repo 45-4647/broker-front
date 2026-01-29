@@ -5,6 +5,7 @@ export default function Navbar({ theme = "dark", toggleTheme }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
+  const user = JSON.parse(localStorage.getItem("user"));
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -76,7 +77,7 @@ export default function Navbar({ theme = "dark", toggleTheme }) {
             </>
           ) : (
             <>
-             <Link
+          {user.role=="seller" &&   <Link
                 to="/post-product"
                 className={`transition ${
                   isDark
@@ -85,7 +86,7 @@ export default function Navbar({ theme = "dark", toggleTheme }) {
                 }`}
               >
                 Post Product
-              </Link>
+              </Link>}
               <Link
                 to="/about"
                 className={`transition ${
@@ -116,7 +117,7 @@ export default function Navbar({ theme = "dark", toggleTheme }) {
               >
                 Profile
               </Link>
-              <Link
+              {user.role=="admin" &&  <Link
                 to="/admin"
                 className={`transition ${
                   isDark
@@ -125,7 +126,7 @@ export default function Navbar({ theme = "dark", toggleTheme }) {
                 }`}
               >
                 Admin
-              </Link>
+              </Link>}
               <button
                 onClick={handleLogout}
                 className="bg-red-500/90 hover:bg-red-600 px-3 py-1 rounded-full text-xs font-semibold shadow-sm shadow-red-900/60 transition"

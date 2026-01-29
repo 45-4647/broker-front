@@ -1,6 +1,7 @@
 import { useState } from "react";
 
-export default function Contact() {
+export default function Contact({ theme = "dark" }) {
+  const isDark = theme === "dark";
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [msg, setMsg] = useState("");
 
@@ -14,12 +15,24 @@ export default function Contact() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 flex flex-col justify-center items-center px-4 py-10 text-slate-50">
-      <div className="bg-slate-900/80 shadow-2xl shadow-slate-950/80 rounded-3xl border border-slate-800/80 p-8 w-full max-w-lg backdrop-blur-xl transform transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_25px_80px_rgba(15,23,42,0.9)]">
+    <div
+      className={`min-h-screen flex flex-col justify-center items-center px-4 py-10 ${
+        isDark
+          ? "bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-slate-50"
+          : "bg-gradient-to-br from-slate-50 via-sky-50 to-slate-50 text-slate-900"
+      }`}
+    >
+      <div
+        className={`shadow-2xl rounded-3xl border p-8 w-full max-w-lg backdrop-blur-xl transform transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_25px_80px_rgba(15,23,42,0.25)] ${
+          isDark
+            ? "bg-slate-900/80 shadow-slate-950/80 border-slate-800/80"
+            : "bg-white/80 shadow-slate-900/10 border-slate-200"
+        }`}
+      >
         <h1 className="text-3xl font-bold mb-2 text-center bg-gradient-to-r from-blue-400 via-sky-400 to-indigo-400 bg-clip-text text-transparent">
           Contact Us
         </h1>
-        <p className="text-xs text-slate-400 mb-6 text-center">
+        <p className={`text-xs mb-6 text-center ${isDark ? "text-slate-400" : "text-slate-500"}`}>
           Have a question or feedback about Broker? Send us a message.
         </p>
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -29,7 +42,11 @@ export default function Contact() {
             placeholder="Your Name"
             value={form.name}
             onChange={handleChange}
-            className="border border-slate-700/70 bg-slate-900/70 text-slate-100 placeholder:text-slate-500 p-2.5 rounded-2xl w-full text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/70 focus:border-blue-500/70"
+            className={`border p-2.5 rounded-2xl w-full text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/70 focus:border-blue-500/70 ${
+              isDark
+                ? "border-slate-700/70 bg-slate-900/70 text-slate-100 placeholder:text-slate-500"
+                : "border-slate-200 bg-white text-slate-900 placeholder:text-slate-400"
+            }`}
             required
           />
           <input
@@ -38,7 +55,11 @@ export default function Contact() {
             placeholder="Your Email"
             value={form.email}
             onChange={handleChange}
-            className="border border-slate-700/70 bg-slate-900/70 text-slate-100 placeholder:text-slate-500 p-2.5 rounded-2xl w-full text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/70 focus:border-blue-500/70"
+            className={`border p-2.5 rounded-2xl w-full text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/70 focus:border-blue-500/70 ${
+              isDark
+                ? "border-slate-700/70 bg-slate-900/70 text-slate-100 placeholder:text-slate-500"
+                : "border-slate-200 bg-white text-slate-900 placeholder:text-slate-400"
+            }`}
             required
           />
           <textarea
@@ -46,7 +67,11 @@ export default function Contact() {
             placeholder="Your Message"
             value={form.message}
             onChange={handleChange}
-            className="border border-slate-700/70 bg-slate-900/70 text-slate-100 placeholder:text-slate-500 p-2.5 rounded-2xl w-full h-32 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/70 focus:border-blue-500/70"
+            className={`border p-2.5 rounded-2xl w-full h-32 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/70 focus:border-blue-500/70 ${
+              isDark
+                ? "border-slate-700/70 bg-slate-900/70 text-slate-100 placeholder:text-slate-500"
+                : "border-slate-200 bg-white text-slate-900 placeholder:text-slate-400"
+            }`}
             required
           />
           <button
@@ -58,7 +83,9 @@ export default function Contact() {
         </form>
 
         {msg && (
-          <p className="text-center mt-4 text-xs text-slate-400">{msg}</p>
+          <p className={`text-center mt-4 text-xs ${isDark ? "text-slate-400" : "text-slate-600"}`}>
+            {msg}
+          </p>
         )}
       </div>
     </div>

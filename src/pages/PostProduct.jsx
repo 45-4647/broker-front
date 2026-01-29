@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import API from "../services/api";
 import { useNavigate } from "react-router-dom";
 
-export default function PostProduct() {
+export default function PostProduct({ theme = "dark" }) {
+  const isDark = theme === "dark";
   const navigate=useNavigate()
   
   const user = JSON.parse(localStorage.getItem("user"));
@@ -79,14 +80,27 @@ export default function PostProduct() {
     }
   }, [user, navigate]);
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 p-4 text-slate-50">
+    <div className={`min-h-screen p-4 ${isDark ? "bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-slate-50" : "bg-gradient-to-br from-slate-50 via-sky-50 to-slate-50 text-slate-900"}`}>
+      <div className="max-w-5xl mx-auto">
+        {/* Hero */}
+        <div className={`rounded-3xl border backdrop-blur-xl p-6 sm:p-8 mb-6 shadow-2xl ${isDark ? "bg-slate-900/60 border-slate-800/80 shadow-slate-950/70" : "bg-white/70 border-slate-200 shadow-slate-900/10"}`}>
+          <p className={`text-xs uppercase tracking-[0.35em] ${isDark ? "text-slate-400" : "text-slate-500"}`}>Seller</p>
+          <h1 className={`mt-2 text-2xl sm:text-3xl font-bold bg-gradient-to-r ${isDark ? "from-blue-400 via-sky-400 to-indigo-400" : "from-sky-600 via-blue-600 to-indigo-600"} bg-clip-text text-transparent`}>
+            Post a Product
+          </h1>
+          <p className={`mt-2 text-sm ${isDark ? "text-slate-300" : "text-slate-600"}`}>
+            Create a clean listing with accurate details to attract the right buyers.
+          </p>
+        </div>
+
+      <div className="flex justify-center items-center">
       <form
         onSubmit={handleSubmit}
-        className="bg-slate-900/80 shadow-2xl shadow-slate-950/80 border border-slate-800/80 rounded-3xl p-6 sm:p-8 w-full max-w-md sm:max-w-lg lg:max-w-2xl backdrop-blur-xl transform transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_25px_80px_rgba(15,23,42,0.9)]"
+        className={`shadow-2xl rounded-3xl p-6 sm:p-8 w-full max-w-md sm:max-w-lg lg:max-w-2xl backdrop-blur-xl transform transition-all duration-500 hover:-translate-y-1 border ${isDark ? "bg-slate-900/80 shadow-slate-950/80 border-slate-800/80 hover:shadow-[0_25px_80px_rgba(15,23,42,0.9)]" : "bg-white/80 shadow-slate-900/10 border-slate-200 hover:shadow-[0_25px_80px_rgba(15,23,42,0.18)]"}`}
         encType="multipart/form-data"
       >
         <h2 className="text-2xl font-semibold mb-1 text-center">Post Product</h2>
-        <p className="text-xs text-slate-400 mb-6 text-center">
+        <p className={`text-xs mb-6 text-center ${isDark ? "text-slate-400" : "text-slate-500"}`}>
           Share a new item with buyers on Broker.
         </p>
 
@@ -96,7 +110,7 @@ export default function PostProduct() {
             placeholder="Product Name"
             value={form.name}
             onChange={handleChange}
-            className="border border-slate-700/70 bg-slate-900/70 text-slate-100 placeholder:text-slate-500 p-2.5 rounded-2xl w-full text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/70 focus:border-blue-500/70"
+            className={`border p-2.5 rounded-2xl w-full text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/70 focus:border-blue-500/70 ${isDark ? "border-slate-700/70 bg-slate-900/70 text-slate-100 placeholder:text-slate-500" : "border-slate-200 bg-white text-slate-900 placeholder:text-slate-400"}`}
             required
           />
           <input
@@ -104,7 +118,7 @@ export default function PostProduct() {
             placeholder="Model"
             value={form.model}
             onChange={handleChange}
-            className="border border-slate-700/70 bg-slate-900/70 text-slate-100 placeholder:text-slate-500 p-2.5 rounded-2xl w-full text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/70 focus:border-blue-500/70"
+            className={`border p-2.5 rounded-2xl w-full text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/70 focus:border-blue-500/70 ${isDark ? "border-slate-700/70 bg-slate-900/70 text-slate-100 placeholder:text-slate-500" : "border-slate-200 bg-white text-slate-900 placeholder:text-slate-400"}`}
           />
           <input
             name="price"
@@ -112,7 +126,7 @@ export default function PostProduct() {
             placeholder="Price"
             value={form.price}
             onChange={handleChange}
-            className="border border-slate-700/70 bg-slate-900/70 text-slate-100 placeholder:text-slate-500 p-2.5 rounded-2xl w-full text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/70 focus:border-blue-500/70"
+            className={`border p-2.5 rounded-2xl w-full text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/70 focus:border-blue-500/70 ${isDark ? "border-slate-700/70 bg-slate-900/70 text-slate-100 placeholder:text-slate-500" : "border-slate-200 bg-white text-slate-900 placeholder:text-slate-400"}`}
             required
           />
           <input
@@ -120,13 +134,13 @@ export default function PostProduct() {
             placeholder="Category"
             value={form.category}
             onChange={handleChange}
-            className="border border-slate-700/70 bg-slate-900/70 text-slate-100 placeholder:text-slate-500 p-2.5 rounded-2xl w-full text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/70 focus:border-blue-500/70"
+            className={`border p-2.5 rounded-2xl w-full text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/70 focus:border-blue-500/70 ${isDark ? "border-slate-700/70 bg-slate-900/70 text-slate-100 placeholder:text-slate-500" : "border-slate-200 bg-white text-slate-900 placeholder:text-slate-400"}`}
           />
           <select
             name="condition"
             value={form.condition}
             onChange={handleChange}
-            className="border border-slate-700/70 bg-slate-900/70 text-slate-100 p-2.5 rounded-2xl w-full text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/70 focus:border-blue-500/70"
+            className={`border p-2.5 rounded-2xl w-full text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/70 focus:border-blue-500/70 ${isDark ? "border-slate-700/70 bg-slate-900/70 text-slate-100" : "border-slate-200 bg-white text-slate-900"}`}
           >
             <option value="New">New</option>
             <option value="Used">Used</option>
@@ -136,7 +150,7 @@ export default function PostProduct() {
             placeholder="Location"
             value={form.location}
             onChange={handleChange}
-            className="border border-slate-700/70 bg-slate-900/70 text-slate-100 placeholder:text-slate-500 p-2.5 rounded-2xl w-full text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/70 focus:border-blue-500/70"
+            className={`border p-2.5 rounded-2xl w-full text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/70 focus:border-blue-500/70 ${isDark ? "border-slate-700/70 bg-slate-900/70 text-slate-100 placeholder:text-slate-500" : "border-slate-200 bg-white text-slate-900 placeholder:text-slate-400"}`}
             required
           />
         </div>
@@ -146,20 +160,20 @@ export default function PostProduct() {
           placeholder="Description"
           value={form.description}
           onChange={handleChange}
-          className="border border-slate-700/70 bg-slate-900/70 text-slate-100 placeholder:text-slate-500 p-2.5 rounded-2xl w-full mt-4 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/70 focus:border-blue-500/70"
+          className={`border p-2.5 rounded-2xl w-full mt-4 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/70 focus:border-blue-500/70 ${isDark ? "border-slate-700/70 bg-slate-900/70 text-slate-100 placeholder:text-slate-500" : "border-slate-200 bg-white text-slate-900 placeholder:text-slate-400"}`}
           rows="4"
         />
 
         {/* Image upload */}
         <div className="mt-4">
-          <label className="block font-medium mb-1 text-sm text-slate-200">
+          <label className={`block font-medium mb-1 text-sm ${isDark ? "text-slate-200" : "text-slate-700"}`}>
             Upload Image
           </label>
           <input
             type="file"
             accept="image/*"
             onChange={handleImageChange}
-            className="w-full border border-slate-700/70 bg-slate-900/70 text-slate-100 p-2.5 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/70 focus:border-blue-500/70"
+            className={`w-full border p-2.5 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/70 focus:border-blue-500/70 ${isDark ? "border-slate-700/70 bg-slate-900/70 text-slate-100" : "border-slate-200 bg-white text-slate-900"}`}
           />
           {preview && (
             <img
@@ -177,8 +191,10 @@ export default function PostProduct() {
           Post Product
         </button>
 
-        {msg && <p className="text-center mt-3 text-xs text-slate-400">{msg}</p>}
+        {msg && <p className={`text-center mt-3 text-xs ${isDark ? "text-slate-400" : "text-slate-600"}`}>{msg}</p>}
       </form>
+      </div>
+      </div>
     </div>
   );
 }

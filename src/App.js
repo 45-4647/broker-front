@@ -62,16 +62,16 @@ console.log(user)
         >
           <Routes>
             <Route path="/" element={<Home theme={theme} />} />
-            <Route path="/product/:id" element={<ProductDetails />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/post-product" element={<PostProduct />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/edit-product/:id" element={<EditProduct />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/admin" element={<AdminProducts />} />
-            <Route path="/chat" element={<ChatList userId={user?._id} />} />
+            <Route path="/product/:id" element={<ProductDetails theme={theme} />} />
+            <Route path="/login" element={<Login theme={theme} />} />
+            <Route path="/register" element={<Register theme={theme} />} />
+            <Route path="/post-product" element={<PostProduct theme={theme} />} />
+            <Route path="/profile" element={<Profile theme={theme} />} />
+            <Route path="/edit-product/:id" element={<EditProduct theme={theme} />} />
+            <Route path="/about" element={<About theme={theme} />} />
+            <Route path="/contact" element={<Contact theme={theme} />} />
+            <Route path="/admin" element={<AdminProducts theme={theme} />} />
+            <Route path="/chat" element={<ChatList theme={theme} userId={user?._id} />} />
             <Route
               path="/chat/:roomId"
               element={<ChatWrapper theme={theme} />}

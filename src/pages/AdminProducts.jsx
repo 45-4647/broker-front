@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import API from "../services/api";
 import { useNavigate } from "react-router-dom";
 
-export default function AdminProducts() {
+export default function AdminProducts({ theme = "dark" }) {
+  const isDark = theme === "dark";
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -51,35 +52,40 @@ export default function AdminProducts() {
 
   if (loading)
     return (
-      <div className="flex justify-center items-center h-screen bg-slate-950 text-slate-200">
+      <div className={`flex justify-center items-center h-screen ${isDark ? "bg-slate-950 text-slate-200" : "bg-slate-50 text-slate-700"}`}>
         <p>Loading all products...</p>
       </div>
     );
 
   if (error)
     return (
-      <div className="flex justify-center items-center h-screen bg-slate-950 text-red-400">
+      <div className={`flex justify-center items-center h-screen ${isDark ? "bg-slate-950 text-red-400" : "bg-slate-50 text-red-600"}`}>
         <p>{error}</p>
       </div>
     );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 p-6 text-slate-50">
-      <h1 className="text-2xl font-semibold text-center mb-2">
-        Admin Dashboard
-      </h1>
-      <p className="text-xs text-slate-400 text-center mb-6">
-        Manage all products on the Broker marketplace.
-      </p>
+    <div className={`min-h-screen p-6 ${isDark ? "bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-slate-50" : "bg-gradient-to-br from-slate-50 via-sky-50 to-slate-50 text-slate-900"}`}>
+      <div className="max-w-6xl mx-auto">
+        {/* Hero */}
+        <div className={`rounded-3xl border backdrop-blur-xl p-6 sm:p-8 mb-6 shadow-2xl ${isDark ? "bg-slate-900/60 border-slate-800/80 shadow-slate-950/70" : "bg-white/70 border-slate-200 shadow-slate-900/10"}`}>
+          <p className={`text-xs uppercase tracking-[0.35em] ${isDark ? "text-slate-400" : "text-slate-500"}`}>Admin</p>
+          <h1 className={`mt-2 text-2xl sm:text-3xl font-bold bg-gradient-to-r ${isDark ? "from-blue-400 via-sky-400 to-indigo-400" : "from-sky-600 via-blue-600 to-indigo-600"} bg-clip-text text-transparent`}>
+            Admin Dashboard
+          </h1>
+          <p className={`mt-2 text-sm ${isDark ? "text-slate-300" : "text-slate-600"}`}>
+            Manage and moderate products across the marketplace.
+          </p>
+        </div>
 
       {products.length === 0 ? (
-        <p className="text-slate-500 text-center">No products found.</p>
+        <p className={`text-center ${isDark ? "text-slate-500" : "text-slate-600"}`}>No products found.</p>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {products.map((p) => (
             <div
               key={p._id}
-              className="bg-slate-900/80 shadow-xl shadow-slate-950/70 rounded-2xl p-4 flex flex-col border border-slate-800/80 backdrop-blur-xl transform transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_25px_80px_rgba(15,23,42,0.9)]"
+              className={`shadow-xl rounded-2xl p-4 flex flex-col border backdrop-blur-xl transform transition-all duration-300 hover:-translate-y-1 ${isDark ? "bg-slate-900/80 shadow-slate-950/70 border-slate-800/80 hover:shadow-[0_25px_80px_rgba(15,23,42,0.9)]" : "bg-white/80 shadow-slate-900/10 border-slate-200 hover:shadow-[0_25px_80px_rgba(15,23,42,0.18)]"}`}
             >
               {p.images && p.images.length > 0 ? (
                 <img
@@ -94,11 +100,11 @@ export default function AdminProducts() {
               )}
 
               <h2 className="font-semibold text-sm sm:text-base">{p.name}</h2>
-              <p className="text-slate-400 text-xs mb-1">
+              <p className={`text-xs mb-1 ${isDark ? "text-slate-400" : "text-slate-500"}`}>
                 {p.model || "—"}
               </p>
-              <p className="text-sky-400 font-bold mb-1 text-sm">${p.price}</p>
-              <p className="text-xs text-slate-500 mb-2">
+              <p className={`font-bold mb-1 text-sm ${isDark ? "text-sky-400" : "text-sky-600"}`}>${p.price}</p>
+              <p className={`text-xs mb-2 ${isDark ? "text-slate-500" : "text-slate-600"}`}>
                 Seller: {p.seller?.name || "Unknown"}
               </p>
 
@@ -112,6 +118,7 @@ export default function AdminProducts() {
           ))}
         </div>
       )}
+      </div>
     </div>
   );
 }

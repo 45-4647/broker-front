@@ -3,7 +3,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import API from "../services/api";
 
 
-export default function ProductDetails() {
+export default function ProductDetails({ theme = "dark" }) {
+  const isDark = theme === "dark";
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -51,12 +52,76 @@ export default function ProductDetails() {
     }
   };
 
-  if (loading) return <p className="flex justify-center items-center h-screen text-slate-300 bg-slate-950">Loading product...</p>;
-  if (!product) return <p className="flex justify-center items-center h-screen text-slate-300 bg-slate-950">Product not found</p>;
+  if (loading)
+    return (
+      <p
+        className={`flex justify-center items-center h-screen ${
+          isDark ? "text-slate-300 bg-slate-950" : "text-slate-700 bg-slate-50"
+        }`}
+      >
+        Loading product...
+      </p>
+    );
+  if (!product)
+    return (
+      <p
+        className={`flex justify-center items-center h-screen ${
+          isDark ? "text-slate-300 bg-slate-950" : "text-slate-700 bg-slate-50"
+        }`}
+      >
+        Product not found
+      </p>
+    );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 p-4 flex flex-col items-center text-slate-50">
-      <div className="bg-slate-900/80 shadow-2xl shadow-slate-950/80 rounded-3xl border border-slate-800/80 p-6 sm:p-8 w-full max-w-4xl backdrop-blur-xl transform transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_25px_80px_rgba(15,23,42,0.9)]">
+    <div
+      className={`min-h-screen p-4 flex flex-col items-center ${
+        isDark
+          ? "bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-slate-50"
+          : "bg-gradient-to-br from-slate-50 via-sky-50 to-slate-50 text-slate-900"
+      }`}
+    >
+      <div className="w-full max-w-4xl">
+        {/* Hero */}
+        <div
+          className={`rounded-3xl border backdrop-blur-xl p-6 sm:p-8 mb-6 shadow-2xl ${
+            isDark
+              ? "bg-slate-900/60 border-slate-800/80 shadow-slate-950/70"
+              : "bg-white/70 border-slate-200 shadow-slate-900/10"
+          }`}
+        >
+          <p
+            className={`text-xs uppercase tracking-[0.35em] ${
+              isDark ? "text-slate-400" : "text-slate-500"
+            }`}
+          >
+            Product
+          </p>
+          <h1
+            className={`mt-2 text-2xl sm:text-3xl font-bold bg-gradient-to-r ${
+              isDark
+                ? "from-blue-400 via-sky-400 to-indigo-400"
+                : "from-sky-600 via-blue-600 to-indigo-600"
+            } bg-clip-text text-transparent`}
+          >
+            {product.name}
+          </h1>
+          <p
+            className={`mt-2 text-sm ${
+              isDark ? "text-slate-300" : "text-slate-600"
+            }`}
+          >
+            Review details, then contact the seller via email, SMS, call, or chat.
+          </p>
+        </div>
+
+        <div
+          className={`shadow-2xl rounded-3xl border p-6 sm:p-8 w-full backdrop-blur-xl transform transition-all duration-500 hover:-translate-y-1 ${
+            isDark
+              ? "bg-slate-900/80 shadow-slate-950/80 border-slate-800/80 hover:shadow-[0_25px_80px_rgba(15,23,42,0.9)]"
+              : "bg-white/80 shadow-slate-900/10 border-slate-200 hover:shadow-[0_25px_80px_rgba(15,23,42,0.18)]"
+          }`}
+        >
         {/* Product Info */}
         <div className="flex flex-col sm:flex-row gap-6">
           <div className="flex-1 flex justify-center items-center">
@@ -74,21 +139,55 @@ export default function ProductDetails() {
           </div>
 
           <div className="flex-1">
-            <h2 className="text-2xl font-semibold mb-2">{product.name}</h2>
-            <p className="text-slate-400 mb-1"><span className="font-semibold text-slate-200">Model:</span> {product.model || "N/A"}</p>
-            <p className="text-sky-400 font-bold text-xl mb-2">${product.price}</p>
-            <p className="text-sm text-slate-300"><span className="font-semibold text-slate-200">Category:</span> {product.category || "N/A"}</p>
-            <p className="text-sm text-slate-300"><span className="font-semibold text-slate-200">Condition:</span> {product.condition}</p>
-            <p className="text-sm text-slate-300 mb-2"><span className="font-semibold text-slate-200">Location:</span> {product.location}</p>
-            <p className="text-slate-200 mt-3 text-sm leading-relaxed">{product.description}</p>
+            <h2 className="text-xl font-semibold mb-2">{product.name}</h2>
+            <p className={`${isDark ? "text-slate-400" : "text-slate-600"} mb-1`}>
+              <span className={`font-semibold ${isDark ? "text-slate-200" : "text-slate-800"}`}>
+                Model:
+              </span>{" "}
+              {product.model || "N/A"}
+            </p>
+            <p className={`${isDark ? "text-sky-400" : "text-sky-600"} font-bold text-xl mb-2`}>
+              ${product.price}
+            </p>
+            <p className={`text-sm ${isDark ? "text-slate-300" : "text-slate-600"}`}>
+              <span className={`font-semibold ${isDark ? "text-slate-200" : "text-slate-800"}`}>
+                Category:
+              </span>{" "}
+              {product.category || "N/A"}
+            </p>
+            <p className={`text-sm ${isDark ? "text-slate-300" : "text-slate-600"}`}>
+              <span className={`font-semibold ${isDark ? "text-slate-200" : "text-slate-800"}`}>
+                Condition:
+              </span>{" "}
+              {product.condition}
+            </p>
+            <p className={`text-sm ${isDark ? "text-slate-300" : "text-slate-600"} mb-2`}>
+              <span className={`font-semibold ${isDark ? "text-slate-200" : "text-slate-800"}`}>
+                Location:
+              </span>{" "}
+              {product.location}
+            </p>
+            <p className={`${isDark ? "text-slate-200" : "text-slate-700"} mt-3 text-sm leading-relaxed`}>
+              {product.description}
+            </p>
           </div>
         </div>
 
         {/* Seller Contact Section */}
-        <div className="mt-6 border-t border-slate-800/80 pt-4">
+        <div className={`mt-6 border-t pt-4 ${isDark ? "border-slate-800/80" : "border-slate-200"}`}>
           <h3 className="text-lg font-semibold mb-2">Contact Seller</h3>
-          <p className="text-slate-300 text-sm"><span className="font-semibold text-slate-200">Seller:</span> {product.seller?.name}</p>
-          <p className="text-slate-300 text-sm mb-3"><span className="font-semibold text-slate-200">Email:</span> {product.seller?.email}</p>
+          <p className={`text-sm ${isDark ? "text-slate-300" : "text-slate-600"}`}>
+            <span className={`font-semibold ${isDark ? "text-slate-200" : "text-slate-800"}`}>
+              Seller:
+            </span>{" "}
+            {product.seller?.name}
+          </p>
+          <p className={`text-sm mb-3 ${isDark ? "text-slate-300" : "text-slate-600"}`}>
+            <span className={`font-semibold ${isDark ? "text-slate-200" : "text-slate-800"}`}>
+              Email:
+            </span>{" "}
+            {product.seller?.email}
+          </p>
 
           <div className="flex flex-wrap gap-3">
             <a
@@ -116,6 +215,7 @@ export default function ProductDetails() {
               Chat with Seller
             </button>
           </div>
+        </div>
         </div>
       </div>
     </div>
