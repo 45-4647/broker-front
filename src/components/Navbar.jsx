@@ -77,7 +77,7 @@ export default function Navbar({ theme = "dark", toggleTheme }) {
             </>
           ) : (
             <>
-          {user.role=="seller" &&   <Link
+          {user.role==="seller" &&   <Link
                 to="/post-product"
                 className={`transition ${
                   isDark
@@ -267,20 +267,11 @@ export default function Navbar({ theme = "dark", toggleTheme }) {
               >
                 Register
               </Link>
-              <Link
-                to="/chats"
-                className={`block text-sm transition ${
-                  isDark
-                    ? "text-slate-100 hover:text-sky-400"
-                    : "text-slate-800 hover:text-sky-600"
-                }`}
-              >
-                Chats
-              </Link>
+             
             </>
           ) : (
             <>
-            <Link
+         {user.role==="seller" &&<Link
               to="/post-product"
               onClick={() => setMenuOpen(false)}
               className={`block text-sm transition ${
@@ -290,7 +281,7 @@ export default function Navbar({ theme = "dark", toggleTheme }) {
               }`}
           >
             Post Product
-          </Link>
+          </Link>}
               <Link
                 to="/profile"
                 onClick={() => setMenuOpen(false)}
