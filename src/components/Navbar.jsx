@@ -77,7 +77,7 @@ export default function Navbar({ theme = "dark", toggleTheme }) {
             </>
           ) : (
             <>
-          {user.role==="seller" &&   <Link
+          {user.role==="seller" &&<Link
                 to="/post-product"
                 className={`transition ${
                   isDark
@@ -117,7 +117,7 @@ export default function Navbar({ theme = "dark", toggleTheme }) {
               >
                 Profile
               </Link>
-              {user.role=="admin" &&  <Link
+              {user.role==="admin" && <Link
                 to="/admin"
                 className={`transition ${
                   isDark
