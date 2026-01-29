@@ -9,6 +9,7 @@ export default function Navbar({ theme = "dark", toggleTheme }) {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+    
     navigate("/login");
   };
 

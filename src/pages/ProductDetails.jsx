@@ -34,10 +34,16 @@ export default function ProductDetails({ theme = "dark" }) {
 
   // Create or get chat room
   const handleChat = async () => {
-    if (!user) {
+   
+ 
+    if (!localStorage.getItem("token")) {
       alert("You must be logged in to chat.");
-      return;
+       return ;
+     
+     
+      
     }
+   
 
     try {
       const res = await API.post("/chatroom", {
