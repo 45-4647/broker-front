@@ -133,7 +133,7 @@ export default function ProductDetails({ theme = "dark" }) {
           <div className="flex-1 flex justify-center items-center">
             {product.images?.length > 0 ? (
               <img
-                src={`https://broker-back.onrender.com${product.images[0]}`}
+                src={product.images[0]}
                 alt={product.name}
                 className="rounded-2xl object-cover w-full h-80 max-w-md border border-slate-700/70 shadow-lg shadow-slate-950/70"
               />

@@ -273,7 +273,7 @@ export default function Home({ theme = "dark" }) {
                 <div className="relative overflow-hidden rounded-xl">
                   {p.images && p.images.length > 0 ? (
                     <img
-                      src={`https://broker-back.onrender.com${p.images[0]}`}
+                      src={p.images[0]}
                       alt={p.name}
                       className="object-cover w-full h-56 transition-transform duration-500 hover:scale-[1.03]"
                     />
