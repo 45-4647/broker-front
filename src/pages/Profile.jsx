@@ -127,7 +127,7 @@ export default function Profile({ theme = "dark" }) {
                 >
                   {p.images?.length > 0 ? (
                     <img
-                      src={`https://broker-back.onrender.com${p.images[0]}`}
+                      src={p.images[0]}
                       alt={p.name}
                       className="rounded-xl h-40 object-cover mb-3 border border-slate-700/70"
                     />
