@@ -89,7 +89,7 @@ export default function AdminProducts({ theme = "dark" }) {
             >
               {p.images && p.images.length > 0 ? (
                 <img
-                  src={`https://broker-back.onrender.com${p.images[0]}`}
+                  src={p.images[0]}
                   alt={p.name}
                   className="h-40 w-full object-cover rounded-xl mb-3 border border-slate-700/70"
                 />
