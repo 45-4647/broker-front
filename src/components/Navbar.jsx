@@ -101,7 +101,7 @@ export default function Navbar({ theme = "dark", toggleTheme }) {
                   }`}>
                     <Link to="/profile" className="block px-4 py-2 hover:bg-red-500">Profile</Link>
                     {user?.role === "admin" && (
-                <Link to="/admin" className={`${linkBase} ${linkColor}`}>Manage Products</Link>
+                <Link to="/admin" className="block px-4 py-2 hover:bg-red-500">Manage Products</Link>
               )}
                     <Link to="/about" className="block px-4 py-2 hover:bg-red-500">About</Link>
                     <button
