@@ -102,8 +102,8 @@ export default function Navbar({ theme = "dark", toggleTheme }) {
                     isDark ? "bg-slate-900 border border-slate-700 text-slate-200" : "bg-white border border-red-100 text-gray-700"
                   }`}>
                     <Link to="/profile" className="block px-4 py-2 hover:bg-red-500">Profile</Link>
-                    <Link to="/settings" className="block px-4 py-2 hover:bg-red-500">Settings</Link>
-                    <Link to="/my-products" className="block px-4 py-2 hover:bg-red-500">My Listings</Link>
+                   
+                    <Link to="/about" className="block px-4 py-2 hover:bg-red-500">About</Link>
                     <button
                       onClick={handleLogout}
                       className="w-full text-left px-4 py-2 hover:bg-red-50 text-red-600"
