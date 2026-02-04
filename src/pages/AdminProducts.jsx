@@ -18,7 +18,7 @@ export default function AdminProducts({ theme = "dark" }) {
         const res = await API.get("/products", {
           headers: { Authorization: `Bearer ${token}` },
         });
-        setProducts(res.data);
+        setProducts(res.data.allProducts);
       } catch (err) {
         console.error("Error fetching all products:", err);
         setError("Failed to load products.");
@@ -82,7 +82,7 @@ export default function AdminProducts({ theme = "dark" }) {
         <p className={`text-center ${isDark ? "text-slate-500" : "text-slate-600"}`}>No products found.</p>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {products.map((p) => (
+          {products?.map((p) => (
             <div
               key={p._id}
               className={`shadow-xl rounded-2xl p-4 flex flex-col border backdrop-blur-xl transform transition-all duration-300 hover:-translate-y-1 ${isDark ? "bg-slate-900/80 shadow-slate-950/70 border-slate-800/80 hover:shadow-[0_25px_80px_rgba(15,23,42,0.9)]" : "bg-white/80 shadow-slate-900/10 border-slate-200 hover:shadow-[0_25px_80px_rgba(15,23,42,0.18)]"}`}
