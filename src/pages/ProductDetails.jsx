@@ -37,7 +37,7 @@ export default function ProductDetails({ theme = "dark" }) {
    
  
     if (!localStorage.getItem("token")) {
-      alert("You must be logged in to chat.");
+       navigate("/login");
        return ;
      
      
