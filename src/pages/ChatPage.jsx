@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { io } from "socket.io-client";
 import API from "../services/api";
 
-const SOCKET_SERVER_URL = "https://broker-backend-greq.onrender.com/";
+const SOCKET_SERVER_URL = "https://broker-back.onrender.com/";
 
 export default function ChatWrapper() {
   const { roomId } = useParams();
