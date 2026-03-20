@@ -18,6 +18,7 @@ export default function PaymentSuccess({ theme = "dark" }) {
     hasVerified.current = true; // set BEFORE async call to prevent duplicate runs
 
     const verifyPayment = async () => {
+        console.log("running")
       try {
         const params = new URLSearchParams(search);
         const session_id = params.get("session_id");
