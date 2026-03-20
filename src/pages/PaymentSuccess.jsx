@@ -10,49 +10,31 @@ export default function PaymentSuccess({ theme = "dark" }) {
   const [status, setStatus] = useState("verifying"); // "verifying" | "success" | "error"
   const [countdown, setCountdown] = useState(5);
 
-  // ✅ Run verification ONCE per mount
-//   useEffect(() => {
-//     if (hasVerified.current) return; // prevent double call
-//     hasVerified.current = true;
+  // Extract search string so it can be a stable dep without re-triggering on object identity
+  const search = location.search;
 
-//     const verifyPayment = async () => {
-//       try {
-//         const params = new URLSearchParams(location.search);
-//         const session_id = params.get("session_id");
-//         const tx_ref = params.get("tx_ref");
+  useEffect(() => {
+    if (hasVerified.current) return;
+    hasVerified.current = true; // set BEFORE async call to prevent duplicate runs
 
-//         if (session_id) await API.get(`/payment/stripe/verify?session_id=${session_id}`);
-//         if (tx_ref) await API.get(`/payment/chapa/verify?tx_ref=${tx_ref}`);
+    const verifyPayment = async () => {
+      try {
+        const params = new URLSearchParams(search);
+        const session_id = params.get("session_id");
+        const tx_ref = params.get("tx_ref");
 
-//         setStatus("success");
-//       } catch (error) {
-//         console.error(error);
-//         setStatus("error");
-//       }
-//     };
+        if (session_id) await API.get(`/payment/stripe/verify?session_id=${session_id}`);
+        if (tx_ref) await API.get(`/payment/chapa/verify?tx_ref=${tx_ref}`);
 
-//     verifyPayment();
-//   }, []); // empty array ensures it runs only once
+        setStatus("success");
+      } catch (error) {
+        console.error(error);
+        setStatus("error");
+      }
+    };
 
-
-useEffect(() => {
-  if (hasVerified.current) return;
-
-  const verifyPayment = async () => {
-    hasVerified.current = true;
-    const params = new URLSearchParams(location.search);
-    const session_id = params.get("session_id");
-    const tx_ref = params.get("tx_ref");
-
-    if (session_id) await API.get(`/payment/stripe/verify?session_id=${session_id}`);
-    if (tx_ref) await API.get(`/payment/chapa/verify?tx_ref=${tx_ref}`);
-
-    setStatus("success");
-  };
-
-  verifyPayment();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-}, []); // runs once per mount
+    verifyPayment();
+  }, [search]);
   // Countdown redirect
   useEffect(() => {
     if (status !== "success") return;
