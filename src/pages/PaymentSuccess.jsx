@@ -10,33 +10,43 @@ export default function PaymentSuccess({ theme = "dark" }) {
   const [status, setStatus] = useState("verifying"); // "verifying" | "success" | "error"
   const [countdown, setCountdown] = useState(5);
 
+  // ✅ Run verification ONCE per mount
   useEffect(() => {
+    if (hasVerified.current) return; // prevent double call
+    hasVerified.current = true;
+
     const verifyPayment = async () => {
-      if (hasVerified.current) return;
-      hasVerified.current = true;
       try {
         const params = new URLSearchParams(location.search);
         const session_id = params.get("session_id");
         const tx_ref = params.get("tx_ref");
+
         if (session_id) await API.get(`/payment/stripe/verify?session_id=${session_id}`);
         if (tx_ref) await API.get(`/payment/chapa/verify?tx_ref=${tx_ref}`);
+
         setStatus("success");
       } catch (error) {
         console.error(error);
         setStatus("error");
       }
     };
-    verifyPayment();
-  }, [location.search]);
 
+    verifyPayment();
+  }, []); // empty array ensures it runs only once
+
+  // Countdown redirect
   useEffect(() => {
     if (status !== "success") return;
     const interval = setInterval(() => {
       setCountdown((prev) => {
-        if (prev <= 1) { clearInterval(interval); navigate("/"); }
+        if (prev <= 1) {
+          clearInterval(interval);
+          navigate("/");
+        }
         return prev - 1;
       });
     }, 1000);
+
     return () => clearInterval(interval);
   }, [status, navigate]);
 
@@ -61,7 +71,6 @@ export default function PaymentSuccess({ theme = "dark" }) {
         {/* Success state */}
         {status === "success" && (
           <>
-            {/* Animated checkmark circle */}
             <div className="relative w-24 h-24 mx-auto mb-6">
               <div className="absolute inset-0 rounded-full bg-green-500/20 animate-ping" />
               <div className="relative w-24 h-24 rounded-full bg-green-500/10 border-2 border-green-500 flex items-center justify-center">
@@ -76,7 +85,6 @@ export default function PaymentSuccess({ theme = "dark" }) {
               Your product has been submitted and will be live shortly.
             </p>
 
-            {/* Countdown bar */}
             <div className={`rounded-xl px-5 py-4 mb-6 ${isDark ? "bg-slate-800" : "bg-slate-50"}`}>
               <p className={`text-xs mb-2 ${isDark ? "text-slate-400" : "text-slate-500"}`}>
                 Redirecting to home in <span className="font-bold text-green-500">{countdown}s</span>
