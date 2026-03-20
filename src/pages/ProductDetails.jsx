@@ -49,6 +49,7 @@ export default function ProductDetails({ theme = "dark" }) {
       const res = await API.post("/chatroom", {
         user1: user.id,
         user2: product.seller._id,
+        productId: product._id,
       });
 
       const roomId = res.data._id; // MongoDB ChatRoom ID

@@ -136,25 +136,22 @@ export default function ChatList({ theme = "dark" }) {
                       }`}
                     >
                       <div className="flex justify-between items-center">
-                        <p
-                          className={`font-medium text-sm ${
-                            isDark ? "text-slate-100" : "text-slate-900"
-                          }`}
-                        >
-                          {partner?.name || "Partner"}
-                        </p>
+                        <div>
+                          <p className={`font-medium text-sm ${isDark ? "text-slate-100" : "text-slate-900"}`}>
+                            {partner?.name || "Partner"}
+                          </p>
+                          {room.productId?.name && (
+                            <p className={`text-[10px] mt-0.5 ${isDark ? "text-blue-400" : "text-blue-500"}`}>
+                              re: {room.productId.name}
+                            </p>
+                          )}
+                        </div>
                         <span className="text-[10px] text-slate-500">
-                          {room.updatedAt
-                            ? new Date(room.updatedAt).toLocaleTimeString()
-                            : ""}
+                          {room.updatedAt ? new Date(room.updatedAt).toLocaleTimeString() : ""}
                         </span>
                       </div>
 
-                      <p
-                        className={`text-xs truncate mt-1 ${
-                          isDark ? "text-slate-400" : "text-slate-600"
-                        }`}
-                      >
+                      <p className={`text-xs truncate mt-1 ${isDark ? "text-slate-400" : "text-slate-600"}`}>
                         {room.lastMessage || "No messages yet"}
                       </p>
 
