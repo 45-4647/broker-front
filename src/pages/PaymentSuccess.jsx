@@ -11,29 +11,48 @@ export default function PaymentSuccess({ theme = "dark" }) {
   const [countdown, setCountdown] = useState(5);
 
   // ✅ Run verification ONCE per mount
-  useEffect(() => {
-    if (hasVerified.current) return; // prevent double call
+//   useEffect(() => {
+//     if (hasVerified.current) return; // prevent double call
+//     hasVerified.current = true;
+
+//     const verifyPayment = async () => {
+//       try {
+//         const params = new URLSearchParams(location.search);
+//         const session_id = params.get("session_id");
+//         const tx_ref = params.get("tx_ref");
+
+//         if (session_id) await API.get(`/payment/stripe/verify?session_id=${session_id}`);
+//         if (tx_ref) await API.get(`/payment/chapa/verify?tx_ref=${tx_ref}`);
+
+//         setStatus("success");
+//       } catch (error) {
+//         console.error(error);
+//         setStatus("error");
+//       }
+//     };
+
+//     verifyPayment();
+//   }, []); // empty array ensures it runs only once
+
+
+useEffect(() => {
+  if (hasVerified.current) return;
+
+  const verifyPayment = async () => {
     hasVerified.current = true;
+    const params = new URLSearchParams(location.search);
+    const session_id = params.get("session_id");
+    const tx_ref = params.get("tx_ref");
 
-    const verifyPayment = async () => {
-      try {
-        const params = new URLSearchParams(location.search);
-        const session_id = params.get("session_id");
-        const tx_ref = params.get("tx_ref");
+    if (session_id) await API.get(`/payment/stripe/verify?session_id=${session_id}`);
+    if (tx_ref) await API.get(`/payment/chapa/verify?tx_ref=${tx_ref}`);
 
-        if (session_id) await API.get(`/payment/stripe/verify?session_id=${session_id}`);
-        if (tx_ref) await API.get(`/payment/chapa/verify?tx_ref=${tx_ref}`);
+    setStatus("success");
+  };
 
-        setStatus("success");
-      } catch (error) {
-        console.error(error);
-        setStatus("error");
-      }
-    };
-
-    verifyPayment();
-  }, []); // empty array ensures it runs only once
-
+  verifyPayment();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+}, []); // runs once per mount
   // Countdown redirect
   useEffect(() => {
     if (status !== "success") return;
