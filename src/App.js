@@ -14,6 +14,8 @@ import ChatList from "./pages/ChatList";
 import { useEffect, useState } from "react";
 import AdminProducts from "./pages/AdminProducts";
 import ChatWrapper from "./pages/ChatPage";
+import PaymentSuccess from "./pages/PaymentSuccess";
+
 
 
 function App() {
@@ -71,6 +73,8 @@ console.log(user)
             <Route path="/about" element={<About theme={theme} />} />
             <Route path="/contact" element={<Contact theme={theme} />} />
             <Route path="/admin" element={<AdminProducts theme={theme} />} />
+            <Route path="/payment-success" element={<PaymentSuccess theme={theme} />} />
+           
             <Route path="/chat" element={<ChatList theme={theme} userId={user?._id} />} />
             <Route
               path="/chat/:roomId"
