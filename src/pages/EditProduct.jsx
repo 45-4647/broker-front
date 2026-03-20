@@ -28,7 +28,9 @@ export default function EditProduct({ theme = "dark" }) {
         const res = await API.get(`/products/detail/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
-        setForm(res.data);
+        // only pick editable fields to avoid sending _id, seller, etc.
+        const { name, model, price, category, condition, location, description } = res.data;
+        setForm({ name: name || "", model: model || "", price: price || "", category: category || "", condition: condition || "New", location: location || "", description: description || "" });
         if (res.data.images && res.data.images.length > 0) {
           setPreview(res.data.images[0]);
         }
