@@ -38,24 +38,23 @@ export default function AdminProducts({ theme = "dark" }) {
 
   useEffect(() => {
     if (!user || user.role !== "admin") { navigate("/"); return; }
+    const fetchAll = async () => {
+      setLoading(true);
+      try {
+        const [pRes, uRes] = await Promise.all([
+          API.get("/admin/products", { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }),
+          API.get("/admin/users", { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }),
+        ]);
+        setProducts(pRes.data);
+        setUsers(uRes.data);
+      } catch {
+        toast.error("Failed to load admin data.");
+      } finally {
+        setLoading(false);
+      }
+    };
     fetchAll();
-  }, [navigate]);
-
-  const fetchAll = async () => {
-    setLoading(true);
-    try {
-      const [pRes, uRes] = await Promise.all([
-        API.get("/admin/products", { headers }),
-        API.get("/admin/users", { headers }),
-      ]);
-      setProducts(pRes.data);
-      setUsers(uRes.data);
-    } catch (err) {
-      toast.error("Failed to load admin data.");
-    } finally {
-      setLoading(false);
-    }
-  };
+  }, [navigate]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleDeleteProduct = async (id) => {
     setDeletingId(id);
