@@ -68,7 +68,7 @@ export default function PostProduct({ theme = "dark" }) {
       alert("This resource is not authorized");
       navigate("/");
     }
-  }, []);
+  }, [user, navigate]);
 
   // shared input class
   const inputCls = `w-full px-4 py-2.5 rounded-xl border text-sm outline-none transition-all duration-200 focus:ring-2 ${

@@ -27,7 +27,7 @@ export default function PaymentSuccess({ theme = "dark" }) {
       }
     };
     verifyPayment();
-  }, []);
+  }, [location.search]);
 
   useEffect(() => {
     if (status !== "success") return;
@@ -38,7 +38,7 @@ export default function PaymentSuccess({ theme = "dark" }) {
       });
     }, 1000);
     return () => clearInterval(interval);
-  }, [status]);
+  }, [status, navigate]);
 
   return (
     <div className={`min-h-screen flex items-center justify-center px-4 transition-colors duration-300 ${isDark ? "bg-slate-950 text-slate-100" : "bg-slate-100 text-slate-900"}`}>
