@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import API from "../services/api";
+import toast from "react-hot-toast";
 
 export default function EditProduct({ theme = "dark" }) {
   const isDark = theme === "dark";
@@ -29,10 +30,11 @@ export default function EditProduct({ theme = "dark" }) {
         });
         setForm(res.data);
         if (res.data.images && res.data.images.length > 0) {
-          setPreview(`http://localhost:4000${res.data.images[0]}`);
+          setPreview(res.data.images[0]);
         }
       } catch (err) {
         console.error("Error fetching product:", err);
+        toast.error("Failed to load product data.");
         setMsg("Failed to load product data");
       }
     };
@@ -64,9 +66,11 @@ export default function EditProduct({ theme = "dark" }) {
       });
 
       setMsg("Product updated successfully!");
+      toast.success("Product updated successfully!");
       setTimeout(() => navigate("/profile"), 1500);
     } catch (err) {
       console.error("Error updating product:", err);
+      toast.error("Failed to update product.");
       setMsg("Failed to update product");
     }
   };

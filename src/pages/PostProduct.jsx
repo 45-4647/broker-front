@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import API from "../services/api";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 export default function PostProduct({ theme = "dark" }) {
   const isDark = theme === "dark";
@@ -65,7 +66,7 @@ export default function PostProduct({ theme = "dark" }) {
 
   useEffect(() => {
     if (!user || user.role !== "seller") {
-      alert("This resource is not authorized");
+      toast.error("This resource is not authorized.");
       navigate("/");
     }
   }, [user, navigate]);

@@ -15,6 +15,7 @@ import { useEffect, useState } from "react";
 import AdminProducts from "./pages/AdminProducts";
 import ChatWrapper from "./pages/ChatPage";
 import PaymentSuccess from "./pages/PaymentSuccess";
+import { Toaster } from "react-hot-toast";
 
 
 
@@ -53,6 +54,13 @@ console.log(user)
         }
       >
         <Navbar theme={theme} toggleTheme={toggleTheme} />
+        <Toaster
+          position="top-right"
+          toastOptions={{
+            duration: 3000,
+            style: { borderRadius: "12px", fontSize: "14px" },
+          }}
+        />
 
         {/* ✅ Main Content Area with Scroll */}
         <main
