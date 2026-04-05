@@ -70,17 +70,17 @@ export default function Navbar({ theme = "dark", toggleTheme }) {
           <span className={isDark ? "text-white" : "text-slate-900"}>Broker</span>
         </Link>
 
-        {/* Desktop nav */}
+        {/* Desktop nav + right controls — all on the right */}
         <div className="hidden md:flex items-center gap-6">
           {navLink("/", "Home")}
           {navLink("/about", "About")}
           {token && navLink("/contact", "Contact")}
           {token && navLink("/chat", "Messages")}
           {token && user?.role === "seller" && navLink("/post-product", "Post Product")}
-        </div>
 
-        {/* Desktop right */}
-        <div className="hidden md:flex items-center gap-3">
+          {/* divider */}
+          <span className={`w-px h-4 ${isDark ? "bg-slate-700" : "bg-slate-200"}`} />
+
           {/* Theme toggle */}
           <button
             onClick={toggleTheme}
