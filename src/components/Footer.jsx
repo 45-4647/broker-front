@@ -1,117 +1,54 @@
+import { Link } from "react-router-dom";
 
 export default function Footer({ theme = "dark" }) {
   const isDark = theme === "dark";
 
   return (
-    <footer
-      className={`pt-6 pb-6 border-t ${
-        isDark
-          ? "bg-slate-950/95 text-slate-200 border-slate-800/80"
-          : "bg-white text-slate-700 border-slate-200"
-      }`}
-    >
-      <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-        {/* Section 1: Brand Info */}
+    <footer className={`border-t transition-colors duration-300 ${isDark ? "bg-slate-950 border-slate-800 text-slate-400" : "bg-white border-slate-200 text-slate-500"}`}>
+      <div className="max-w-7xl mx-auto px-6 py-10 grid grid-cols-1 sm:grid-cols-3 gap-8">
+
+        {/* Brand */}
         <div>
-          <h2 className="text-2xl font-semibold mb-2">
-            <span
-              className={
-                isDark
-                  ? "bg-gradient-to-r from-blue-400 via-sky-400 to-indigo-400 bg-clip-text text-transparent"
-                  : "bg-gradient-to-r from-sky-500 via-blue-500 to-indigo-500 bg-clip-text text-transparent"
-              }
-            >
-              Broker
-            </span>
-          </h2>
-          <p className={`text-sm ${isDark ? "text-slate-400" : "text-slate-500"}`}>
-            Broker is a marketplace platform that connects sellers and buyers
-            directly — post your product, find interested buyers, and make deals
-            without intermediaries.
+          <div className="flex items-center gap-2 mb-3">
+            <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white text-xs font-black">B</div>
+            <span className={`font-extrabold text-base ${isDark ? "text-white" : "text-slate-900"}`}>Broker</span>
+          </div>
+          <p className="text-sm leading-relaxed">
+            A marketplace that connects sellers and buyers directly — no middlemen, no fees beyond listing.
           </p>
+          <p className="text-xs mt-3">📍 Addis Ababa, Ethiopia</p>
         </div>
 
-        {/* Section 2: Quick Links */}
+        {/* Links */}
         <div>
-          <h3 className="text-lg font-semibold mb-2">Quick Links</h3>
+          <p className={`text-xs font-bold uppercase tracking-widest mb-3 ${isDark ? "text-slate-300" : "text-slate-700"}`}>Quick Links</p>
           <ul className="space-y-2 text-sm">
-            <li>
-              <a
-                href="/"
-                className={`transition ${
-                  isDark ? "hover:text-sky-400" : "hover:text-sky-600"
-                }`}
-              >
-                Home
-              </a>
-            </li>
-            <li>
-              <a
-                href="/post-product"
-                className={`transition ${
-                  isDark ? "hover:text-sky-400" : "hover:text-sky-600"
-                }`}
-              >
-                Post Product
-              </a>
-            </li>
-            <li>
-              <a
-                href="/about"
-                className={`transition ${
-                  isDark ? "hover:text-sky-400" : "hover:text-sky-600"
-                }`}
-              >
-                About
-              </a>
-            </li>
-             
-            <li>
-              <a
-                href="/contact"
-                className={`transition ${
-                  isDark ? "hover:text-sky-400" : "hover:text-sky-600"
-                }`}
-              >
-                Contact
-              </a>
-            </li>
-           
-            <li>
-              <a
-                href="/about"
-                className={`transition ${
-                  isDark ? "hover:text-sky-400" : "hover:text-sky-600"
-                }`}
-              >
-                About
-              </a>
-            </li>
+            {[
+              { to: "/", label: "Home" },
+              { to: "/about", label: "About" },
+              { to: "/contact", label: "Contact" },
+              { to: "/post-product", label: "Post a Product" },
+            ].map(({ to, label }) => (
+              <li key={to}>
+                <Link to={to} className={`transition hover:underline ${isDark ? "hover:text-white" : "hover:text-slate-900"}`}>{label}</Link>
+              </li>
+            ))}
           </ul>
         </div>
 
-        {/* Section 3: Contact Info */}
+        {/* Contact */}
         <div>
-          <h3 className="text-lg font-semibold mb-2">Contact Us</h3>
-          <p className={`text-sm ${isDark ? "text-slate-400" : "text-slate-500"}`}>
-            Email: support@broker.com
-          </p>
-          <p className={`text-sm ${isDark ? "text-slate-400" : "text-slate-500"}`}>
-            Phone: +251 900 000 000
-          </p>
-          <p
-            className={`text-sm mt-2 ${
-              isDark ? "text-slate-400" : "text-slate-500"
-            }`}
-          >
-            Location: Addis Ababa, Ethiopia
-          </p>
+          <p className={`text-xs font-bold uppercase tracking-widest mb-3 ${isDark ? "text-slate-300" : "text-slate-700"}`}>Contact</p>
+          <ul className="space-y-2 text-sm">
+            <li>✉️ support@broker.com</li>
+            <li>📞 +251 900 000 000</li>
+          </ul>
         </div>
       </div>
 
-      {/* Bottom Bar */}
-      <div className="border-t border-slate-800 mt-8 pt-4 text-center text-xs text-slate-500">
-        © {new Date().getFullYear()} Broker. All rights reserved.
+      <div className={`border-t px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs ${isDark ? "border-slate-800" : "border-slate-100"}`}>
+        <p>© {new Date().getFullYear()} Broker. All rights reserved.</p>
+        <p className={isDark ? "text-slate-600" : "text-slate-400"}>Built for Ethiopian marketplace</p>
       </div>
     </footer>
   );

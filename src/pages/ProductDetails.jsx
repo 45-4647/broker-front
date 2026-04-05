@@ -32,28 +32,22 @@ export default function ProductDetails({ theme = "dark" }) {
     fetchProduct();
   }, [id]);
 
-  // Create or get chat room
   const handleChat = async () => {
-   
- 
     if (!localStorage.getItem("token")) {
-       navigate("/login");
-       return ;
-     
-     
-      
+      navigate("/login");
+      return;
     }
-   
+    // user state may not be loaded yet — read directly from localStorage
+    const currentUser = user || JSON.parse(localStorage.getItem("user"));
+    if (!currentUser) { navigate("/login"); return; }
 
     try {
       const res = await API.post("/chatroom", {
-        user1: user.id,
+        user1: currentUser.id,
         user2: product.seller._id,
         productId: product._id,
       });
-
-      const roomId = res.data._id; // MongoDB ChatRoom ID
-      navigate(`/chat/${roomId}`);
+      navigate(`/chat/${res.data._id}`);
     } catch (err) {
       console.error("Error creating/getting chat room:", err);
     }
