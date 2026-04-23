@@ -53,6 +53,10 @@ export default function ProductDetails({ theme = "dark" }) {
         user2: product.seller._id,
         productId: product._id,
       });
+      if (!res.data?._id) {
+        toast.error("Could not create chat room. Please try again.");
+        return;
+      }
       navigate(`/chat/${res.data._id}`);
     } catch (err) {
       console.error("Error creating/getting chat room:", err);
