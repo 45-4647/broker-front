@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import API from "../services/api";
+import toast from "react-hot-toast";
 
 
 export default function ProductDetails({ theme = "dark" }) {
@@ -41,6 +42,11 @@ export default function ProductDetails({ theme = "dark" }) {
     const currentUser = user || JSON.parse(localStorage.getItem("user"));
     if (!currentUser) { navigate("/login"); return; }
 
+    if (!product.seller?._id) {
+      toast.error("This seller is no longer available.");
+      return;
+    }
+
     try {
       const res = await API.post("/chatroom", {
         user1: currentUser.id,
@@ -50,6 +56,7 @@ export default function ProductDetails({ theme = "dark" }) {
       navigate(`/chat/${res.data._id}`);
     } catch (err) {
       console.error("Error creating/getting chat room:", err);
+      toast.error("Could not open chat. Please try again.");
     }
   };
 
