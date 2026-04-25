@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import API from "../services/api";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import LocationPicker from "../components/LocationPicker";
 
 const CATEGORIES = ["Electronics","Vehicles","Real Estate","Fashion","Furniture","Services","Other"];
 
@@ -27,6 +28,7 @@ export default function PostProduct({ theme = "dark" }) {
   const [step, setStep] = useState(1); // 1=details, 2=image, 3=payment
   const [form, setForm] = useState({
     name: "", model: "", price: "", category: "", condition: "New", location: "", description: "",
+    lat: null, lng: null,
   });
   const [image, setImage] = useState(null);
   const [preview, setPreview] = useState(null);
@@ -62,7 +64,9 @@ export default function PostProduct({ theme = "dark" }) {
     try {
       const token = localStorage.getItem("token");
       const formData = new FormData();
-      for (const key in form) formData.append(key, form[key]);
+      for (const key in form) {
+        if (form[key] !== null && form[key] !== undefined) formData.append(key, form[key]);
+      }
       if (image) formData.append("image", image);
       const endpoint = paymentMethod === "stripe" ? "/payment/stripe" : "/payment/chapa";
       const res = await API.post(endpoint, formData, {
@@ -232,6 +236,30 @@ export default function PostProduct({ theme = "dark" }) {
                       </label>
                       <input name="location" placeholder="e.g. Addis Ababa, Bole" value={form.location} onChange={handleChange} required className={inputCls} />
                     </div>
+                  </div>
+                  {/* Map picker */}
+                  <div>
+                    <label className={labelCls}>Pin on Map
+                      <span className={`ml-1 normal-case font-normal ${isDark ? "text-slate-500" : "text-slate-400"}`}>— helps buyers find you</span>
+                    </label>
+                    <LocationPicker
+                      lat={form.lat}
+                      lng={form.lng}
+                      isDark={isDark}
+                      onPick={(lat, lng, displayName) => {
+                        setForm(f => ({
+                          ...f,
+                          lat,
+                          lng,
+                          location: displayName ? displayName.split(",").slice(0, 3).join(",") : f.location,
+                        }));
+                      }}
+                    />
+                    {form.lat && (
+                      <p className={`text-xs mt-1 ${isDark ? "text-green-400" : "text-green-600"}`}>
+                        ✓ Location pinned: {form.lat.toFixed(5)}, {form.lng.toFixed(5)}
+                      </p>
+                    )}
                   </div>
                   <div>
                     <label className={labelCls}>Description

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import API from "../services/api";
 import toast from "react-hot-toast";
+import LocationMap from "../components/LocationMap";
 
 export default function ProductDetails({ theme = "dark" }) {
   const isDark = theme === "dark";
@@ -189,6 +190,32 @@ export default function ProductDetails({ theme = "dark" }) {
                 </div>
               )}
             </div>
+
+            {/* Location map */}
+            {product.lat && product.lng && (
+              <div className={`rounded-2xl border p-5 ${card}`}>
+                <h3 className={`text-sm font-bold mb-3 flex items-center gap-2 ${isDark ? "text-slate-300" : "text-slate-700"}`}>
+                  <svg className="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                  </svg>
+                  Product Location
+                </h3>
+                <p className={`text-xs mb-3 ${isDark ? "text-slate-400" : "text-slate-500"}`}>{product.location}</p>
+                <LocationMap lat={product.lat} lng={product.lng} label={product.location} isDark={isDark} />
+                <a
+                  href={`https://www.google.com/maps?q=${product.lat},${product.lng}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`mt-3 flex items-center gap-1.5 text-xs font-medium text-blue-500 hover:underline`}
+                >
+                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                  </svg>
+                  Open in Google Maps
+                </a>
+              </div>
+            )}
 
             {/* How it works illustration */}
             <div className={`rounded-2xl border p-6 ${card}`}>

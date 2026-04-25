@@ -18,6 +18,7 @@ export default function Profile({ theme = "dark", toggleTheme }) {
   // Edit profile state
   const [editForm, setEditForm] = useState({ name: "", phone: "" });
   const [editLoading, setEditLoading] = useState(false);
+  const [avatarLoading, setAvatarLoading] = useState(false);
 
   // Password state
   const [pwForm, setPwForm] = useState({ currentPassword: "", newPassword: "", confirm: "" });
@@ -60,6 +61,38 @@ export default function Profile({ theme = "dark", toggleTheme }) {
     } catch (err) {
       toast.error(err.response?.data?.message || "Failed to update.", { id: tid });
     } finally { setEditLoading(false); }
+  };
+
+  const handleAvatarChange = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    setAvatarLoading(true);
+    const tid = toast.loading("Uploading photo...");
+    try {
+      const formData = new FormData();
+      formData.append("avatar", file);
+      const res = await API.put("/auth/me/avatar", formData, {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}`, "Content-Type": "multipart/form-data" },
+      });
+      setUser(res.data);
+      toast.success("Profile photo updated.", { id: tid });
+    } catch {
+      toast.error("Failed to upload photo.", { id: tid });
+    } finally { setAvatarLoading(false); }
+  };
+
+  const handleRemoveAvatar = async () => {
+    setAvatarLoading(true);
+    const tid = toast.loading("Removing photo...");
+    try {
+      const res = await API.delete("/auth/me/avatar", {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      });
+      setUser(res.data);
+      toast.success("Photo removed.", { id: tid });
+    } catch {
+      toast.error("Failed to remove photo.", { id: tid });
+    } finally { setAvatarLoading(false); }
   };
 
   const handleChangePassword = async (e) => {
@@ -123,15 +156,30 @@ export default function Profile({ theme = "dark", toggleTheme }) {
             <div className={`${card} p-6 text-center`}>
               {/* Avatar */}
               <div className="relative inline-block mb-4">
-                <div className="w-24 h-24 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white text-3xl font-extrabold mx-auto shadow-lg">
-                  {initials}
-                </div>
-                <div className={`absolute bottom-0 right-0 w-7 h-7 rounded-full border-2 flex items-center justify-center ${isDark ? "bg-slate-800 border-slate-900" : "bg-white border-slate-100"}`}>
-                  <span className="text-xs">✏️</span>
-                </div>
+                {user.profileImage ? (
+                  <img src={user.profileImage} alt={user.name} className="w-24 h-24 rounded-full object-cover mx-auto shadow-lg border-2 border-blue-500/30" />
+                ) : (
+                  <div className="w-24 h-24 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white text-3xl font-extrabold mx-auto shadow-lg">
+                    {initials}
+                  </div>
+                )}
+                {/* Upload button */}
+                <label className={`absolute bottom-0 right-0 w-8 h-8 rounded-full border-2 flex items-center justify-center cursor-pointer transition ${avatarLoading ? "opacity-50 cursor-not-allowed" : "hover:scale-110"} ${isDark ? "bg-slate-800 border-slate-900" : "bg-white border-slate-100"}`}>
+                  {avatarLoading
+                    ? <svg className="w-3.5 h-3.5 animate-spin" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"/></svg>
+                    : <span className="text-xs">📷</span>
+                  }
+                  <input type="file" accept="image/*" onChange={handleAvatarChange} className="hidden" disabled={avatarLoading} />
+                </label>
               </div>
               <h2 className="font-extrabold text-lg">{user.name}</h2>
               <p className={`text-xs mt-0.5 ${isDark ? "text-slate-400" : "text-slate-500"}`}>{user.email}</p>
+              {user.profileImage && (
+                <button onClick={handleRemoveAvatar} disabled={avatarLoading}
+                  className={`text-xs mt-1 text-red-400 hover:text-red-300 transition disabled:opacity-50`}>
+                  Remove photo
+                </button>
+              )}
               <div className="flex items-center justify-center gap-2 mt-2">
                 <span className={`text-xs px-2.5 py-1 rounded-full font-semibold capitalize border ${
                   user.role === "admin" ? "bg-purple-500/10 text-purple-400 border-purple-500/20" :
