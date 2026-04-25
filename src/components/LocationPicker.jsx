@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+﻿import { useState } from "react";
 import { MapContainer, TileLayer, Marker, useMapEvents } from "react-leaflet";
 import L from "leaflet";
 
@@ -67,7 +67,7 @@ export default function LocationPicker({ lat, lng, onPick, isDark }) {
         <MapContainer center={center} zoom={lat ? 15 : 12} style={{ height: "100%", width: "100%" }} key={`${lat}-${lng}`}>
           <TileLayer
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            attribution='© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+            attribution='Â© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
           />
           <ClickHandler onPick={(la, ln) => onPick(la, ln)} />
           {lat && lng && <Marker position={[lat, lng]} />}
@@ -75,8 +75,9 @@ export default function LocationPicker({ lat, lng, onPick, isDark }) {
       </div>
 
       <p className={`text-xs ${isDark ? "text-slate-500" : "text-slate-400"}`}>
-        📍 Search an address or click on the map to pin your location.
+        ðŸ“ Search an address or click on the map to pin your location.
       </p>
     </div>
   );
 }
+
