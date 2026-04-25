@@ -15,6 +15,7 @@ import { useEffect, useState } from "react";
 import AdminProducts from "./pages/AdminProducts";
 import PaymentSuccess from "./pages/PaymentSuccess";
 import { Toaster } from "react-hot-toast";
+import AnnouncementBar from "./components/AnnouncementBar";
 
 
 
@@ -24,9 +25,10 @@ function AppLayout({ theme, toggleTheme, user }) {
 
   return (
     <div className={theme === "dark" ? "flex flex-col min-h-screen bg-slate-950 text-slate-50" : "flex flex-col min-h-screen bg-slate-100 text-slate-900"}>
+      <AnnouncementBar />
       <Navbar theme={theme} toggleTheme={toggleTheme} />
       <Toaster position="top-right" toastOptions={{ duration: 3000, style: { borderRadius: "12px", fontSize: "14px" } }} />
-      <main className={`flex-1 pt-16 ${isChat ? "overflow-hidden flex flex-col" : theme === "dark" ? "overflow-y-auto scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-slate-900" : "overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100"}`}>
+      <main className={`flex-1 pt-16 ${isChat ? "overflow-hidden flex flex-col" : theme === "dark" ? "overflow-y-auto" : "overflow-y-auto"}`}>
         <Routes>
           <Route path="/" element={<Home theme={theme} />} />
           <Route path="/product/:id" element={<ProductDetails theme={theme} />} />
