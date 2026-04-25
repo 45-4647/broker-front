@@ -78,7 +78,6 @@ export default function PostProduct({ theme = "dark" }) {
 
   // Step validation
   const step1Valid = form.name && form.price && form.category && form.location && form.condition;
-  const step2Valid = true; // image optional
 
   const inputCls = `w-full px-4 py-3 rounded-xl border text-sm outline-none transition-all duration-200 focus:ring-2 ${
     isDark ? "bg-slate-800 border-slate-700 text-slate-100 placeholder-slate-500 focus:ring-blue-500/40 focus:border-blue-500"

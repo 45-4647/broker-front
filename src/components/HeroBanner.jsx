@@ -41,20 +41,17 @@ const slides = [
 
 export default function HeroBanner() {
   const [current, setCurrent] = useState(0);
-  const [prev, setPrev] = useState(null);
-  const [fading, setFading] = useState(false);
+  const [animating, setAnimating] = useState(false);
 
   const go = useCallback((idx) => {
     const next = (idx + slides.length) % slides.length;
-    if (next === current) return;
-    setPrev(current);
-    setFading(true);
+    if (next === current || animating) return;
+    setAnimating(true);
     setTimeout(() => {
       setCurrent(next);
-      setPrev(null);
-      setFading(false);
+      setAnimating(false);
     }, 600);
-  }, [current]);
+  }, [current, animating]);
 
   useEffect(() => {
     const t = setInterval(() => go(current + 1), 5000);
