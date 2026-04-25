@@ -75,6 +75,10 @@ export default function Profile({ theme = "dark", toggleTheme }) {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}`, "Content-Type": "multipart/form-data" },
       });
       setUser(res.data);
+      // sync profileImage to localStorage so navbar updates
+      const stored = JSON.parse(localStorage.getItem("user") || "{}");
+      localStorage.setItem("user", JSON.stringify({ ...stored, profileImage: res.data.profileImage }));
+      window.dispatchEvent(new Event("focus"));
       toast.success("Profile photo updated.", { id: tid });
     } catch {
       toast.error("Failed to upload photo.", { id: tid });
@@ -89,6 +93,10 @@ export default function Profile({ theme = "dark", toggleTheme }) {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
       setUser(res.data);
+      // sync to localStorage
+      const stored2 = JSON.parse(localStorage.getItem("user") || "{}");
+      localStorage.setItem("user", JSON.stringify({ ...stored2, profileImage: null }));
+      window.dispatchEvent(new Event("focus"));
       toast.success("Photo removed.", { id: tid });
     } catch {
       toast.error("Failed to remove photo.", { id: tid });

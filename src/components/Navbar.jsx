@@ -5,13 +5,22 @@ export default function Navbar({ theme = "dark", toggleTheme }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [user, setUser] = useState(() => JSON.parse(localStorage.getItem("user") || "null"));
   const dropdownRef = useRef();
   const navigate = useNavigate();
   const location = useLocation();
 
   const token = localStorage.getItem("token");
-  const user = JSON.parse(localStorage.getItem("user") || "null");
   const isDark = theme === "dark";
+
+  // Re-read user from localStorage when it changes (e.g. after profile image upload)
+  useEffect(() => {
+    const onStorage = () => setUser(JSON.parse(localStorage.getItem("user") || "null"));
+    window.addEventListener("storage", onStorage);
+    // also poll on focus so same-tab updates work
+    window.addEventListener("focus", onStorage);
+    return () => { window.removeEventListener("storage", onStorage); window.removeEventListener("focus", onStorage); };
+  }, []);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -103,8 +112,11 @@ export default function Navbar({ theme = "dark", toggleTheme }) {
                 onClick={() => setDropdownOpen(!dropdownOpen)}
                 className="flex items-center gap-2 group"
               >
-                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-indigo-500 flex items-center justify-center text-white font-bold text-sm">
-                  {user?.name?.charAt(0).toUpperCase() || "U"}
+                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-indigo-500 flex items-center justify-center text-white font-bold text-sm overflow-hidden">
+                  {user?.profileImage
+                    ? <img src={user.profileImage} alt={user.name} className="w-8 h-8 object-cover" />
+                    : user?.name?.charAt(0).toUpperCase() || "U"
+                  }
                 </div>
                 <svg className={`w-3.5 h-3.5 transition-transform ${dropdownOpen ? "rotate-180" : ""} ${isDark ? "text-slate-400" : "text-slate-500"}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
@@ -113,9 +125,17 @@ export default function Navbar({ theme = "dark", toggleTheme }) {
 
               {dropdownOpen && (
                 <div className={`absolute right-0 mt-2 w-52 rounded-2xl border shadow-xl py-1.5 text-sm overflow-hidden ${isDark ? "bg-slate-900 border-slate-700 text-slate-200" : "bg-white border-slate-200 text-slate-700 shadow-slate-200/50"}`}>
-                  <div className={`px-4 py-2.5 border-b ${isDark ? "border-slate-800" : "border-slate-100"}`}>
-                    <p className="font-semibold text-sm">{user?.name}</p>
-                    <p className={`text-xs mt-0.5 capitalize ${isDark ? "text-slate-400" : "text-slate-500"}`}>{user?.role}</p>
+                  <div className={`px-4 py-2.5 border-b flex items-center gap-3 ${isDark ? "border-slate-800" : "border-slate-100"}`}>
+                    <div className="w-9 h-9 rounded-full bg-gradient-to-br from-blue-500 to-indigo-500 flex items-center justify-center text-white font-bold text-sm shrink-0 overflow-hidden">
+                      {user?.profileImage
+                        ? <img src={user.profileImage} alt={user.name} className="w-9 h-9 object-cover" />
+                        : user?.name?.charAt(0).toUpperCase() || "U"
+                      }
+                    </div>
+                    <div>
+                      <p className="font-semibold text-sm">{user?.name}</p>
+                      <p className={`text-xs mt-0.5 capitalize ${isDark ? "text-slate-400" : "text-slate-500"}`}>{user?.role}</p>
+                    </div>
                   </div>
                   <Link to="/profile" onClick={() => setDropdownOpen(false)} className={`flex items-center gap-2 px-4 py-2 transition ${isDark ? "hover:bg-slate-800" : "hover:bg-slate-50"}`}>
                     <svg className="w-4 h-4 opacity-60" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
