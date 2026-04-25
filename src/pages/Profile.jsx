@@ -24,16 +24,15 @@ export default function Profile({ theme = "dark", toggleTheme }) {
   const [pwLoading, setPwLoading] = useState(false);
   const [showPw, setShowPw] = useState({ current: false, new: false, confirm: false });
 
-  const token = localStorage.getItem("token");
-  const headers = { Authorization: `Bearer ${token}` };
-
   useEffect(() => {
-    if (!token) { toast.error("Please log in."); navigate("/login"); return; }
+    const _token = localStorage.getItem("token");
+    const _headers = { Authorization: `Bearer ${_token}` };
+    if (!_token) { toast.error("Please log in."); navigate("/login"); return; }
     const load = async () => {
       try {
         const [uRes, pRes] = await Promise.all([
-          API.get("/auth/me", { headers }),
-          API.get("/products/my", { headers }),
+          API.get("/auth/me", { headers: _headers }),
+          API.get("/products/my", { headers: _headers }),
         ]);
         setUser(uRes.data);
         setEditForm({ name: uRes.data.name || "", phone: uRes.data.phone || "" });
@@ -52,7 +51,7 @@ export default function Profile({ theme = "dark", toggleTheme }) {
     setEditLoading(true);
     const tid = toast.loading("Saving...");
     try {
-      const res = await API.put("/auth/me", editForm, { headers });
+      const res = await API.put("/auth/me", editForm, { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } });
       setUser(res.data);
       // update localStorage
       const stored = JSON.parse(localStorage.getItem("user") || "{}");
@@ -70,7 +69,7 @@ export default function Profile({ theme = "dark", toggleTheme }) {
     setPwLoading(true);
     const tid = toast.loading("Updating password...");
     try {
-      await API.put("/auth/me/password", { currentPassword: pwForm.currentPassword, newPassword: pwForm.newPassword }, { headers });
+      await API.put("/auth/me/password", { currentPassword: pwForm.currentPassword, newPassword: pwForm.newPassword }, { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } });
       toast.success("Password updated.", { id: tid });
       setPwForm({ currentPassword: "", newPassword: "", confirm: "" });
     } catch (err) {
@@ -82,7 +81,7 @@ export default function Profile({ theme = "dark", toggleTheme }) {
     setDeletingId(productId);
     const tid = toast.loading("Deleting...");
     try {
-      await API.delete(`/products/${productId}`, { headers });
+      await API.delete(`/products/${productId}`, { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } });
       setProducts(p => p.filter(x => x._id !== productId));
       toast.success("Product deleted.", { id: tid });
     } catch {
