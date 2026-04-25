@@ -35,7 +35,7 @@ function AppLayout({ theme, toggleTheme, user }) {
           <Route path="/login" element={<Login theme={theme} />} />
           <Route path="/register" element={<Register theme={theme} />} />
           <Route path="/post-product" element={<PostProduct theme={theme} />} />
-          <Route path="/profile" element={<Profile theme={theme} />} />
+          <Route path="/profile" element={<Profile theme={theme} toggleTheme={toggleTheme} />} />
           <Route path="/edit-product/:id" element={<EditProduct theme={theme} />} />
           <Route path="/about" element={<About theme={theme} />} />
           <Route path="/contact" element={<Contact theme={theme} />} />
