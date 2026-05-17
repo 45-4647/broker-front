@@ -12,7 +12,7 @@ export default function Login({ theme = "dark" }) {
   const user = JSON.parse(localStorage.getItem("user") || "null");
 
 
-  if(user !="null"){
+  if(user !=="null"){
     navigate("/")
      return
   }
