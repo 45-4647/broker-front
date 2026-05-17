@@ -9,6 +9,13 @@ export default function Login({ theme = "dark" }) {
   const [form, setForm] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
   const [showPass, setShowPass] = useState(false);
+  const user = JSON.parse(localStorage.getItem("user") || "null");
+
+
+  if(user !="null"){
+    navigate("/")
+     return
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -32,6 +39,8 @@ export default function Login({ theme = "dark" }) {
       ? "bg-slate-800 border-slate-700 text-slate-100 placeholder-slate-500 focus:ring-blue-500/40 focus:border-blue-500"
       : "bg-slate-50 border-slate-200 text-slate-800 placeholder-slate-400 focus:ring-blue-400/40 focus:border-blue-400"
   }`;
+
+  
 
   return (
     <div className={`min-h-screen flex transition-colors duration-300 ${isDark ? "bg-slate-950 text-slate-100" : "bg-slate-100 text-slate-900"}`}>
