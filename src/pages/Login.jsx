@@ -10,12 +10,12 @@ export default function Login({ theme = "dark" }) {
   const [loading, setLoading] = useState(false);
   const [showPass, setShowPass] = useState(false);
   const user = JSON.parse(localStorage.getItem("user") || "null");
+  console.log(user)
 
-
-  if(user !=="null"){
-    navigate("/")
-     return
-  }
+// if(user !== "null"){
+//     navigate("/")
+//      return
+//   }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -40,6 +40,7 @@ export default function Login({ theme = "dark" }) {
       : "bg-slate-50 border-slate-200 text-slate-800 placeholder-slate-400 focus:ring-blue-400/40 focus:border-blue-400"
   }`;
 
+  
   
 
   return (
