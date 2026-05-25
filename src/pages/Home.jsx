@@ -129,9 +129,11 @@ export default function Home({ theme = "dark" }) {
                 Join 3,500+ buyers and sellers closing deals every day. Electronics, vehicles, real estate, fashion and more — all in one place.
               </p>
               <div className="flex flex-wrap gap-3 mb-8">
-                <Link to="#listings" className="px-7 py-3.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm transition-all active:scale-95 shadow-lg shadow-blue-600/30">
+                <button
+                  onClick={() => document.getElementById("listings")?.scrollIntoView({ behavior: "smooth" })}
+                  className="px-7 py-3.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm transition-all active:scale-95 shadow-lg shadow-blue-600/30">
                   View Listings →
-                </Link>
+                </button>
                 {!user ? (
                   <Link to="/register" className="px-7 py-3.5 rounded-xl border border-white/30 hover:bg-white/10 text-white font-bold text-sm transition-all flex items-center gap-2">
                     <span className="w-5 h-5 rounded-full bg-white/20 flex items-center justify-center text-xs">▶</span>
@@ -252,9 +254,9 @@ export default function Home({ theme = "dark" }) {
                 </li>
               ))}
             </ul>
-            <Link to="#listings" className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-sm transition-all">
+            <button onClick={() => document.getElementById("listings")?.scrollIntoView({ behavior: "smooth" })} className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-sm transition-all">
               Browse Listings →
-            </Link>
+            </button>
           </div>
         </div>
       </div>
@@ -452,9 +454,9 @@ export default function Home({ theme = "dark" }) {
             <Link to="/register" className="px-8 py-3.5 rounded-xl bg-white text-blue-700 font-bold text-sm hover:bg-blue-50 transition-all active:scale-95">
               Create Free Account →
             </Link>
-            <Link to="#listings" className="px-8 py-3.5 rounded-xl border border-white/40 text-white font-bold text-sm hover:bg-white/10 transition-all">
+            <button onClick={() => document.getElementById("listings")?.scrollIntoView({ behavior: "smooth" })} className="px-8 py-3.5 rounded-xl border border-white/40 text-white font-bold text-sm hover:bg-white/10 transition-all">
               Browse Listings
-            </Link>
+            </button>
           </div>
         </div>
       </div>
