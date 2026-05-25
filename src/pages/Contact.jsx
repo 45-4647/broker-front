@@ -47,7 +47,7 @@ const contactInfo = [
 
 const faqs = [
   { q: "How do I post a product?", a: "Register as a seller, go to Post Product, fill in the details, pay the 200 ETB promotion fee, and your listing goes live." },
-  { q: "Is Broker free to use?", a: "Browsing and buying is completely free. Sellers pay a one-time 200 ETB listing fee per product." },
+  { q: "Is Broker free to use?", a: "Browsing and buying is completely free. Sellers pay a one-time 3% ETB of Product Price listing fee per product." },
   { q: "How do I contact a seller?", a: "Open any product listing and use the Chat, Email, SMS, or Call buttons to reach the seller directly." },
   { q: "What payment methods are supported?", a: "We support Chapa (Telebirr, bank transfer) and Stripe (credit/debit card) for listing fees." },
 ];
